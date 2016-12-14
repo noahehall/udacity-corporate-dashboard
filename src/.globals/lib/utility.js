@@ -1,6 +1,5 @@
 import _ from 'lodash';
 
-
 const utility = {
   _, // oowee love lodash ;)
 
