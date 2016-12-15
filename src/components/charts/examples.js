@@ -127,11 +127,24 @@ export class Examples extends React.Component {
         .style('opacity', 0.7)
         .style('fill', 'green');
 
-      appToolTip
+      const appToolTipTransition = d3
+        .transition()
+        .duration(250)
+        .delay(100)
+        .ease(d3.easePolyIn);
+
+      try{
+        appToolTip
+        .transition(appToolTipTransition)
         .style('opacity', 1)
         .style('color', 'white')
         .style('left', `${d3.event.pageX}px`)
-        .style('top', `${d3.event.pageY}px`)
+        .style('top', `${d3.event.pageY}px`);
+      } catch (err) {
+        appFuncs.console('dir')(err);
+      }
+
+      appToolTip
         .html(d);
 
       thisItem.on('mouseout', function () { // eslint-disable-line
@@ -139,8 +152,13 @@ export class Examples extends React.Component {
           .style('opacity', 1)
           .style('fill', barColor);
 
-        appToolTip
+        try { // if too many transitions, will throw err
+          appToolTip
+          .transition(appToolTipTransition)
           .style('opacity', 0);
+        } catch (err) {
+          appFuncs.console('dir')(err);
+        }
       });
     });
   }
