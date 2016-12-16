@@ -9,7 +9,8 @@ module.exports = {
       "error", {
         "position": "above",
         "ignorePattern": "eslintignore"
-      }
-    ]
+      },
+    ],
+    'prefer-reflect': 0,
   }
 }
