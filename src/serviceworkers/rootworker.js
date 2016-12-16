@@ -119,7 +119,8 @@ self.addEventListener('fetch', (event) => {
                 }
 
                 // never insert blobs with 0 bytes
-                appFuncs.console('error')(`blob size 0: ${blob}, ${event.request.url}`);
+                appFuncs.console('dir')(blob);
+                appFuncs.console('error')(`blob size 0: ${event.request.url}`);
 
                 return false;
               },

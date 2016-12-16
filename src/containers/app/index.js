@@ -42,7 +42,7 @@ class App extends React.Component {
           htmlAttributes={{ lang: 'en' }}
           link={[
             {
-              'href': `${appConsts.isProd ? 'https' : 'http'}://fonts.googleapis.com/css?family=Muli|Varela%20Round`,
+              'href': 'https://fonts.googleapis.com/css?family=Muli|Varela%20Round',
               'rel': 'stylesheet',
               type:'text/css',
             },
