@@ -27,7 +27,6 @@ export class Examples extends React.Component {
   }
 
   componentDidMount () {
-    appFuncs.console('dir')(d3);
     // basics
     d3.select(`#${this.props.id} .header`).text('we changed the text!');
     d3.select(`#${this.props.id} .header`).append('div').html('some text');
@@ -73,9 +72,13 @@ export class Examples extends React.Component {
     return (
       <section
         id={this.props.id}
+        style={{
+          maxHeight: '400px',
+          width: '100%',
+        }}
       >
-        <BarChart />
         <PieChart />
+        <BarChart />
         <h1 className='piechart header'>{this.props.header}</h1>
         <ul className='piechart unordered'>
           <li className='piechart item'>one</li>

@@ -1,7 +1,8 @@
 /* eslint-disable sort-vars, no-unused-vars */
 import { connect } from 'react-redux';
-import { pieSlices } from './piechart/generatearcs.js';
 import { getPieChart } from 'store/selectors';
+import { getPieSlices } from './piechart/slices.js';
+import { PieChartSVG } from './piechart/svg.js';
 import * as d3 from 'd3';
 import * as d3chromatic from 'd3-scale-chromatic'; // eslint-disable-line  //https://github.com/d3/d3-scale-chromatic
 import React from 'react';
@@ -20,16 +21,17 @@ export class Examples extends React.Component {
     super(props);
 
     this.state = {
-      chartHeight: 500,
-      chartWidth: 500,
+      chartHeight: 1,
+      chartWidth: 1,
       margin: {  // eslintignore specially good for crating space for axes, legends, etc
-        bottom: 50,
-        left: 70,
-        right: 20,
+        bottom: 20,
+        left: 60,
+        right: 60,
         top: 20,
       },
-      svgHeight: 250,
-      svgWidth: 250,
+      parentHeight: 1,
+      parentWidth: 1,
+      radius: 5/2,
     };
   }
 
@@ -50,21 +52,23 @@ export class Examples extends React.Component {
       .style('position', 'absolute');
   }
 
-  shouldComponentUpdate () {
-    return true;
-  }
-
   componentWillUnmount () {
     if( typeof window !== 'undefined' )
       window.removeEventListener(`resize`, this.setSize);
   }
 
-  setSize = (e, parent = this.pieChart) => {
+  setSize = (e, container = this.container) => {
+    const parent = container.parentNode;
+
     this.setState({
-      chartHeight: parent.clientHeight - (this.state.margin.top + this.state.margin.bottom),
-      chartWidth: parent.clientWidth - (this.state.margin.left + this.state.margin.right),
-      svgHeight: parent.clientHeight,
-      svgWidth: parent.clientWidth,
+      chartHeight: parent.offsetHeight - (this.state.margin.top + this.state.margin.bottom),
+      chartWidth: parent.offsetWidth - (this.state.margin.left + this.state.margin.right),
+      parentHeight: parent.offsetHeight,
+      parentWidth: parent.offsetWidth,
+      radius: Math.min(
+        parent.offsetHeight - (this.state.margin.top + this.state.margin.bottom),
+        parent.offsetWidth - (this.state.margin.left + this.state.margin.right)
+      ) / 2,
     });
 
     return true;
@@ -74,45 +78,25 @@ export class Examples extends React.Component {
     return (
       <section
         id={this.props.id}
-        ref={(pieChart) => this.pieChart = pieChart}
+        ref={(container) => this.container = container}
         style={{
-          display: 'inline-block',
-          height: this.state.svgHeight,
+          display: 'block',
+          height: this.state.parentHeight,
           overflow: 'hidden',
           position: 'relative',
           verticalAlign: 'top',
-          width: this.state.svgWidth,
+          width: this.state.parentWidth,
         }}
       >
-        <svg
-          className='chart-svg'
-          preserveAspectRatio={'xMinYMin meet'}
-          ref={(chartSVG) => this.chartSVG = chartSVG}
-          style={{
-            display: 'inline-block',
-            position: 'absolute',
-          }}
-          viewBox={`0 0 ${this.state.svgWidth} ${this.state.svgHeight}`}
-        >
-          <g
-            className='chart-g'
-            height={this.state.chartWidth}
-            ref={(chartG) => this.chartG = chartG}
-            transform={`translate(${[ this.state.margin.left, this.state.margin.top ]})`}
-            width={this.state.chartWidth}
-          >
-            <g
-              className='piechart-slices-container'
-              ref={(slicesContainer) => this.slicesContainer = slicesContainer}
-              transform={`translate(${[ this.state.chartWidth/2, this.state.chartHeight/2 ]})`}
-            >
-              {pieSlices({
-                chartHeight: this.state.chartHeight,
-                data:this.props.pieChart.data
-              })}
-            </g>
-          </g>
-        </svg>
+        <PieChartSVG
+          chartHeight={this.state.chartHeight}
+          chartWidth={this.state.chartWidth}
+          data={this.props.pieChart.data}
+          margin={this.state.margin}
+          radius={this.state.radius}
+          svgHeight={this.state.parentHeight}
+          svgWidth={this.state.parentWidth}
+        />
       </section>
     );
   }

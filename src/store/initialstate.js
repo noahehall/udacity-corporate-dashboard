@@ -8,6 +8,18 @@ export default {
       data: [
         {
           gender: 'Male',
+          lastName: 'Hello',
+          total: 141.92,
+        }, {
+          gender: 'Male',
+          lastName: 'Good Bye',
+          total: 149.79,
+        }, {
+          gender: 'Male',
+          lastName: 'Blooper',
+          total: 134.23,
+        }, {
+          gender: 'Male',
           lastName: 'Roberts',
           total: 141.92,
         }, {
