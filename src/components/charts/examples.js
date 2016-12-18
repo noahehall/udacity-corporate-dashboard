@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { getArrayData, getColors, getBarChart } from 'store/selectors';
+import { getArrayData, getColors } from 'store/selectors';
 import * as d3 from 'd3';
 import Circle from 'components/svg/circle.js';
 import Ellipse from 'components/svg/ellipse.js';
@@ -9,6 +9,7 @@ import React from 'react';
 import Rect from 'components/svg/rect.js';
 import Text from 'components/svg/text.js';
 import BarChart from './examples/barchart';
+import PieChart from './examples/piechart';
 
 export class Examples extends React.Component {
   static defaultProps = {
@@ -74,6 +75,7 @@ export class Examples extends React.Component {
         id={this.props.id}
       >
         <BarChart />
+        <PieChart />
         <h1 className='piechart header'>{this.props.header}</h1>
         <ul className='piechart unordered'>
           <li className='piechart item'>one</li>
@@ -130,7 +132,6 @@ export class Examples extends React.Component {
 
 const mapStateToProps = (state) =>
   ({
-    barChart: getBarChart(state),
     colors: getColors(state),
     data: getArrayData(state),
   });
