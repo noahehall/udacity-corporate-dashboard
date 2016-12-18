@@ -41,9 +41,9 @@ const utility = {
       warn: 'warn',
     };
 
-    return bypass || !appConsts.isProd ?
-      notprod[type] || prod[type] :
-      prod[type];
+    return bypass || !appConsts.isProd
+      ? notprod[type] || prod[type]
+      : prod[type];
   },
 
   /**
@@ -56,12 +56,13 @@ const utility = {
   * @return {Function} console.method, console.log, or null function
   */
   console (type = 'log', bypass = false) {
-    if (type) {
-      if (console[type]) return console[type]; // eslint-disable-line no-console
-      if (console.log) return console.log; // eslint-disable-line no-console
-    }
+    let thisType = this.consoleTypes(type, bypass);
 
-    return (f) => {null};
+    return !thisType
+      ? (f) => {null}
+      : console[thisType]
+        ? console[thisType]
+        : console.log;
   },
 
   /**

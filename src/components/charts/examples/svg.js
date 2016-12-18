@@ -23,7 +23,7 @@ export const SVG = ({
 
   return (
     <svg
-        className='chart-svg'
+      className='chart-svg'
       preserveAspectRatio={preserveAspectRatio}
       style={{
         display: 'block',
