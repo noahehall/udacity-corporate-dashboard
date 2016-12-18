@@ -12,7 +12,7 @@ const utility = {
   * @return {String|undefined} the requested console method or undefined
   */
   consoleTypes (type, bypass) {
-    // only these are allowed in prod
+    // permitted console logging in production
     const prod = {
       debug: 'debug',
       error: 'error',
@@ -20,7 +20,7 @@ const utility = {
       trace: 'trace',
     };
 
-    // these are allowed everywhere
+    // permitted console logging
     const notprod = {
       assert: 'assert',
       clear: 'clear',
@@ -41,9 +41,9 @@ const utility = {
       warn: 'warn',
     };
 
-    return bypass || !appConsts.isProd ?
-      notprod[type] || prod[type] :
-      prod[type];
+    return !appConsts.isProd || bypass
+      ? prod[type] || notprod[type]
+      : prod[type];
   },
 
   /**
@@ -56,12 +56,13 @@ const utility = {
   * @return {Function} console.method, console.log, or null function
   */
   console (type = 'log', bypass = false) {
-    if (type) {
-      if (console[type]) return console[type]; // eslint-disable-line no-console
-      if (console.log) return console.log; // eslint-disable-line no-console
-    }
+    let thisType = this.consoleTypes(type, bypass);
 
-    return (f) => {null};
+    return !thisType
+      ? (f) => {null}
+      : console[thisType]
+        ? console[thisType]
+        : console.log;
   },
 
   /**
