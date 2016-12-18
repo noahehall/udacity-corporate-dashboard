@@ -93,6 +93,7 @@ export class Examples extends React.Component {
           chartWidth={this.state.chartWidth}
           data={this.props.pieChart.data}
           margin={this.state.margin}
+          preserveAspectRatio='xMinYMin meet'
           radius={this.state.radius}
           svgHeight={this.state.parentHeight}
           svgWidth={this.state.parentWidth}
