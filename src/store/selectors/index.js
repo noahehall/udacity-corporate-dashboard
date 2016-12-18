@@ -14,6 +14,11 @@ export const getBarChart = createSelector(
   (thisData) => thisData.barChart
 );
 
+export const getPieChart = createSelector(
+  [data],
+  (thisData) => thisData.pieChart
+);
+
 export const getColors = createSelector(
   [styles],
   (thisStyles) => thisStyles.colors

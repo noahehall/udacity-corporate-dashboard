@@ -15,6 +15,7 @@ import spdy from 'spdy';
 // store
 import { Provider } from 'react-redux';
 import configure from './store/configure';
+import initialState from './store/initialstate.js';
 
 const port = 3000;
 
@@ -98,21 +99,7 @@ app.get("*", (req, res) => {
     }
     if (!renderProps) return res.status(404).end('Not found.');
     // setup store based on data sent in
-    const store = configure(Immutable({
-      data: {
-        array: [ 12, 14, 16, 18, 20, 22, 24, 26 ],
-        barChart: {
-          data: [ 100, 200, 400, 300, 100, 200, 400, 300, 100, 200, 400, 300, 100, 200, 400, 300 ],
-        },
-        styles: {
-          colors: {
-            list: [ 'red', 'blue', 'green', 'brown', 'pink', 'orange' ],
-            two: [ '#7F88B2', '#0025B2' ],
-          },
-        },
-      },
-      msg: 'welcome to your application',
-    }));
+    const store = configure(Immutable(initialState));
 
     const InitialComponent = ( // eslint-disable-line no-extra-parens
       <Provider store={store} >

@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { getArrayData, getColors, getBarChart } from 'store/selectors';
+import { getArrayData, getColors } from 'store/selectors';
 import * as d3 from 'd3';
 import Circle from 'components/svg/circle.js';
 import Ellipse from 'components/svg/ellipse.js';
@@ -9,6 +9,7 @@ import React from 'react';
 import Rect from 'components/svg/rect.js';
 import Text from 'components/svg/text.js';
 import BarChart from './examples/barchart';
+import PieChart from './examples/piechart';
 
 export class Examples extends React.Component {
   static defaultProps = {
@@ -26,7 +27,6 @@ export class Examples extends React.Component {
   }
 
   componentDidMount () {
-    appFuncs.console('dir')(d3);
     // basics
     d3.select(`#${this.props.id} .header`).text('we changed the text!');
     d3.select(`#${this.props.id} .header`).append('div').html('some text');
@@ -72,7 +72,12 @@ export class Examples extends React.Component {
     return (
       <section
         id={this.props.id}
+        style={{
+          maxHeight: '400px',
+          width: '100%',
+        }}
       >
+        <PieChart />
         <BarChart />
         <h1 className='piechart header'>{this.props.header}</h1>
         <ul className='piechart unordered'>
@@ -130,7 +135,6 @@ export class Examples extends React.Component {
 
 const mapStateToProps = (state) =>
   ({
-    barChart: getBarChart(state),
     colors: getColors(state),
     data: getArrayData(state),
   });
