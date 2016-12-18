@@ -1,8 +1,7 @@
 /* eslint-disable sort-vars, no-unused-vars */
 import { connect } from 'react-redux';
 import { getPieChart } from 'store/selectors';
-import { getPieSlices } from './piechart/slices.js';
-import { PieChartSVG } from './piechart/svg.js';
+import { SVG } from './svg.js';
 import * as d3 from 'd3';
 import * as d3chromatic from 'd3-scale-chromatic'; // eslint-disable-line  //https://github.com/d3/d3-scale-chromatic
 import React from 'react';
@@ -23,7 +22,7 @@ export class Examples extends React.Component {
     this.state = {
       chartHeight: 1,
       chartWidth: 1,
-      margin: {  // eslintignore specially good for crating space for axes, legends, etc
+      margin: {  // eslintignore specially good for creating space for axes, legends, etc
         bottom: 20,
         left: 60,
         right: 60,
@@ -88,14 +87,16 @@ export class Examples extends React.Component {
           width: this.state.parentWidth,
         }}
       >
-        <PieChartSVG
+        <SVG
           chartHeight={this.state.chartHeight}
+          chartType='pie'
           chartWidth={this.state.chartWidth}
           data={this.props.pieChart.data}
+          labels={[ 'lastName', 'total' ]}
           margin={this.state.margin}
-          radius={this.state.radius}
           svgHeight={this.state.parentHeight}
           svgWidth={this.state.parentWidth}
+          value='total'
         />
       </section>
     );
