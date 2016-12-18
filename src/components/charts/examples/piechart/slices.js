@@ -9,23 +9,24 @@ import React from 'react';
  * @return {[type]}     [description]
  */
 
-function generateArcs ({ data, sort }) {
+function generateArcs ({ data, sort, value }) {
   return d3.pie()
     .sort(sort)
-    .value((d) => d.total)(data);
+    .value((d) => d[value])(data);
 }
 
 
-export const getPieSlices = ({
+export const PieSlices = ({
   chartHeight,
   chartWidth,
   data,
   labels,
-  radius, // eslint-disable-line
+  value = 'total',
 }) => {
   const arcData = generateArcs({
     data,
     sort: null,
+    value,
   });
 
   const arcArray = [];
