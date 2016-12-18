@@ -6,7 +6,7 @@ export const PieChartSVG = ({
   chartWidth,
   data,
   margin,
-  preserveAspectRatio,
+  preserveAspectRatio = 'xMinYMin meet',
   radius,
   svgHeight,
   svgWidth,
