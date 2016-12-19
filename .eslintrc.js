@@ -12,5 +12,12 @@ module.exports = {
       },
     ],
     'prefer-reflect': 0,
+    'no-confusing-arrow': [
+      "error", {
+        "allowParens": true
+      }
+    ],
+    'no-extra-parens': 0,
+    'no-mixed-operators': 0
   }
 }
