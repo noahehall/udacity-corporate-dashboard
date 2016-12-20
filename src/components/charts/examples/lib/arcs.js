@@ -12,6 +12,23 @@ export const generateLabelArc = ({
   .outerRadius(Math.min(chartHeight, chartWidth)) // eslintignore bigger number = smaller pie
   .startAngle(startAngle);
 
+// path generator
+export const generateArcPath = ({
+  chartHeight,
+  chartWidth,
+  cornerRadius = 1,
+  endAngle,
+  padAngle = 0.03,
+  startAngle,
+}) => d3
+  .arc()
+  .cornerRadius(cornerRadius)
+  .endAngle(endAngle)
+  .innerRadius(Math.min(chartWidth, chartHeight)/8) // eslintignore bigger number = smaller donut
+  .outerRadius(Math.min(chartWidth, chartHeight)/1.9) // eslintignore bigger number = smaller pie
+  .padAngle(padAngle)
+  .startAngle(startAngle);
+
 /**
  * Returns an array of objects with data for each slice
  * @method generateArcs

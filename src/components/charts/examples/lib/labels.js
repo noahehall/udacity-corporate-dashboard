@@ -1,24 +1,45 @@
 import React from 'react';
 import * as arcs from './arcs.js';
 
-export const getPieLabelText = ({
+export const getLabelText = ({
   arc = { data: {}},
+  chartType = '',
+  d = {},
   labels = [],
 }) => {
-  const label = [];
-  if (labels.length)
-    labels.forEach((thisLabel, idx) =>
-      label.push(
-        <tspan className={'label'} key={`${thisLabel}-${idx}`}>
-          {`${arc.data[thisLabel]}  `}
-        </tspan>
-      )
-    );
+  if (!labels.length) return null;
+  switch (chartType.toLowerCase()) {
+    case 'pie': {
+      const label = [];
+      labels.forEach((thisLabel, idx) =>
+        label.push(
+          <tspan className={'label'} key={`${thisLabel}-${idx}`}>
+            {`${arc.data[thisLabel]}  `}
+          </tspan>
+        )
+      );
 
-  return label;
+      return label;
+    }
+    case 'bar': {
+      let thisLabel = '';
+      labels.forEach((label) => thisLabel += `${d[label]} `);
+
+      return thisLabel;
+    }
+    default: return null;
+  }
 };
 
-export const getPieLabels = ({
+getLabelText.propTypes = {
+  arc: React.PropTypes.object,
+  chartType: React.PropTypes.string,
+  d: React.PropTypes.object,
+  labels: React.PropTypes.array,
+};
+
+
+export const getPieLabels = ({ // eslint-disable-line
   arc = { data: {}, endAngle: 10, startAngle: 10 },
   chartHeight = 200,
   chartWidth = 200,
@@ -51,7 +72,7 @@ export const getPieLabels = ({
       xlinkHref={`#arc-${idx}`}
       y={y/2}
     >
-      {getPieLabelText({ arc, labels })}
+      {getLabelText({ arc, chartType: 'pie', labels })}
     </text>
   );
 };

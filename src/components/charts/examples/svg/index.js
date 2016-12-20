@@ -1,7 +1,7 @@
-import { Bars } from './barchart/bars.js';
-import { PieSlices } from './piechart/slices.js';
-import * as scales from './lib/scales.js';
-import * as axes from './lib/axes.js';
+import { Bars } from '../barchart/bars.js';
+import { PieSlices } from '../piechart/slices.js';
+import * as scales from '../lib/scales.js';
+import * as axes from '../lib/axes.js';
 import React from 'react';
 
 export const getVisualContainerTransform = ({

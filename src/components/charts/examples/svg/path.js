@@ -1,13 +1,25 @@
 import React from 'react';
 
 export const Path = ({ // eslintignore https://developer.mozilla.org/en-US/docs/Web/SVG/Element/path
-  d = 'M150 0 L75 200 L225 200 Z'
+  chartType = 'pie',
+  d,
+  fill = 'blue',
+  id = '',
+  stroke = 'gray',
 }) => <path
+  className={`${chartType}-path`}
   d={d}
+  fill={fill}
+  id={id}
+  stroke={stroke}
 />;
 
 Path.propTypes = {
-  d: React.PropTypes.string,
+  chartType: React.PropTypes.string,
+  d: React.PropTypes.string.isRequired,
+  fill: React.PropTypes.string,
+  id: React.PropTypes.string,
+  stroke: React.PropTypes.string,
 };
 
 export default Path;
