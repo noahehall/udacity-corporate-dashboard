@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import { getBarChart, getMargins, getPieChart } from 'store/selectors';
-import BarChart from './examples/barchart';
-import PieChart from './examples/piechart';
+import BarChart from './examples/barchart/';
+import PieChart from './examples/piechart/';
 import React from 'react';
 
 export class Examples extends React.Component {

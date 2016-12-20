@@ -22,7 +22,7 @@ export const getXAxis = ({
   thisXScale = null,
 }) => (
   id && thisXScale && typeof document !== 'undefined'
-    ? d3
+    ? d3 // eslintignore let d3 handle the axis instead of building ourselves
       .select(document.getElementById(`${id}`))
       .select('.x.axis')
       .call(d3.axisBottom(thisXScale))

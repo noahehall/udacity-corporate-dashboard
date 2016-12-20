@@ -1,4 +1,4 @@
-import { SVG } from './svg.js';
+import { SVG } from '../svg';
 import React from 'react';
 
 export const BarChart = ({
