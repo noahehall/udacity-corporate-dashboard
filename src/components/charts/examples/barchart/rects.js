@@ -16,7 +16,7 @@ export const BarRects = ({
         height={yScale(d)}
         width={xScale.bandwidth()}
         x={xScale(i)} // eslintignore `i * (barWidth + barOffset)` if you're not using scaleBands
-        y={height - thisHeight}
+        y={height - yScale(d)}
       />
     );
   });
