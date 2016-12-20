@@ -5,22 +5,40 @@ import * as d3chromatic from 'd3-scale-chromatic'; // eslintignore https://githu
 // first send it into this function e.g. below in the Height and Y properties
 export const yScale = ({
   chartHeight,
+  chartType = 'bar',
   dataMaxNumber,
-}) => d3
-  .scaleLinear()
-  .domain([ 0, dataMaxNumber ])
-  .range([ chartHeight, 0 ]);
+}) => {
+  switch (chartType.toLowerCase()) {
+    case 'pie': return null;
+    case 'bar':
+    default: {
+      return d3
+        .scaleLinear()
+        .domain([ 0, dataMaxNumber ])
+        .range([ chartHeight, 0 ]);
+    }
+  }
+};
 
 // anywhere you need the X dimension of the bar to scale to the viewport of the svg
 export const xScale = ({
+  chartType = 'bar',
+  chartWidth,
   dataLabelsArray,
-  chartWidth
-}) => d3
-  .scaleBand()
-  .domain(dataLabelsArray)
-  .rangeRound([ 0, chartWidth ])
-  .paddingInner(0.1)
-  .paddingOuter(0.5);
+}) => {
+  switch (chartType.toLowerCase()) {
+    case 'pie': return null;
+    case 'bar':
+    default: {
+      return d3
+        .scaleBand()
+        .domain(dataLabelsArray)
+        .rangeRound([ 0, chartWidth ])
+        .paddingInner(0.1)
+        .paddingOuter(0.5);
+    }
+  }
+};
 
 
 // set color scale based on

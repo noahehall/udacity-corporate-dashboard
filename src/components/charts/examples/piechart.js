@@ -2,12 +2,12 @@ import { SVG } from './svg.js';
 import React from 'react';
 
 export const PieChart = ({
-  chart = { data: {}},
+  chart = { data: {}, margins: {}},
   chartType = '',
   containerHeight = 200,
   containerWidth = 200,
   id = 'piechart',
-  margin = {
+  margins = {
     bottom: 20,
     left: 60,
     right: 60,
@@ -16,10 +16,11 @@ export const PieChart = ({
 }) =>
   <SVG
     chartType={chartType}
+    colorScale=''
     data={chart.data}
     id={id}
     labels={[ 'lastName', 'total' ]}
-    margin={margin}
+    margins={margins}
     svgHeight={containerHeight}
     svgWidth={containerWidth}
     value='total'
@@ -34,7 +35,7 @@ PieChart.propTypes = {
   containerHeight: React.PropTypes.number,
   containerWidth: React.PropTypes.number,
   id: React.PropTypes.string,
-  margin: React.PropTypes.object,
+  margins: React.PropTypes.object,
   chart: React.PropTypes.object, // eslint-disable-line
 };
 

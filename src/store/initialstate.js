@@ -57,6 +57,12 @@ export default {
           total: 268.50,
         },
       ],
+      margins: {
+        bottom: 80,
+        left: 60,
+        right: 60,
+        top: 20,
+      }
     },
     margins: {
       bottom: 20,
