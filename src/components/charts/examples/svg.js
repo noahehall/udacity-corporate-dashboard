@@ -1,7 +1,7 @@
 import { Bars } from './barchart/bars.js';
 import { PieSlices } from './piechart/slices.js';
-import * as d3 from 'd3';
 import * as scales from './lib/scales.js';
+import * as axes from './lib/axes.js';
 import React from 'react';
 
 export const getVisualContainerTransform = ({
@@ -13,73 +13,6 @@ export const getVisualContainerTransform = ({
     case 'pie': return `translate(${[ chartWidth/2, chartHeight/2 ]})`;
     default : return 'translate(0, 0)';
   }
-};
-
-export const getLabels = ({ d, labels }) => {
-  let thisLabel = '';
-  labels.forEach((label) => thisLabel += `${d[label]} `);
-
-  return thisLabel;
-};
-
-export const getXScale = ({
-  data,
-  labels,
-  margins,
-  svgWidth,
-}) =>
-  scales.xScale({
-    chartWidth: svgWidth - (margins.left + margins.right),
-    dataLabelsArray: data.map((d) => getLabels({ d, labels })),
-  });
-
-export const getXAxis = ({
-  id = '', // eslint-disable-line
-  thisXScale = null,
-}) => (
-  id && thisXScale
-    ? d3
-      .select(document.getElementById(`${id}`))
-      .select('.x.axis')
-      .call(d3.axisBottom(thisXScale))
-      .selectAll("text")
-      .style("text-anchor", "end")
-      .attr("dx", "-.8em")
-      .attr("dy", ".15em")
-      .attr("transform", "rotate(-65)")
-    : null
-);
-
-export const getYScale = ({
-  data = {},
-  margins = {},
-  svgHeight = 200,
-  value = '',
-}) => {
-  if (!value || appFuncs._.isEmpty(data)) return null;
-  const dataMaxNumber = appFuncs._.maxBy(data, (o) => o[value])[value];
-
-  return scales.yScale({
-    chartHeight: svgHeight - (margins.top + margins.bottom),
-    dataMaxNumber,
-  });
-};
-
-export const getYAxis = ({
-  thisYScale = null,
-  getit = false,
-}) => {
-  if (getit && thisYScale) {
-    const yScale = thisYScale.copy();
-    // eslintignore need 0 to be in bottom left
-    const yAxis = yScale.range(yScale.range().reverse()); // eslint-disable-line
-    // barchart vertical axis
-    // appFuncs.console('dir')(node);
-
-    return true;
-  }
-
-  return null;
 };
 
 export const SVG = ({
@@ -104,7 +37,7 @@ export const SVG = ({
   yScale = false,
 }) => {
   if (appFuncs._.isEmpty(data)) return null;
-  let chartFunction = () => null;
+  let chartFunction;
   switch (chartType.toLowerCase()) {
     case 'pie':
       chartFunction = PieSlices;
@@ -118,19 +51,19 @@ export const SVG = ({
   const
     chartHeight = svgHeight - (margins.top + margins.bottom),
     chartWidth = svgWidth - (margins.left + margins.right),
-    hasWindow = typeof window !== 'undefined',
+    hasDocument = typeof document !== 'undefined',
     thisColorScale = colorScale
       ? scales.colorScale(colorScale)
       : null,
     thisXScale = xScale
-      ? getXScale({ data, labels, margins, svgWidth })
+      ? scales.getXScale({ data, labels, margins, svgWidth })
       : null,
     thisYScale = yScale
-      ? getYScale({ data, margins, svgHeight, value })
+      ? scales.getYScale({ data, margins, svgHeight, value })
       : null;
 
-  if (yAxis && thisYScale && hasWindow) getYAxis({ id, thisYScale });
-  if (xAxis && thisXScale && hasWindow) getXAxis({ id, thisXScale });
+  if (yAxis && thisYScale && hasDocument) axes.getYAxis({ id, thisYScale });
+  if (xAxis && thisXScale && hasDocument) axes.getXAxis({ id, thisXScale });
 
   return (
     <svg

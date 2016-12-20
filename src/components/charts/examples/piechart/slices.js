@@ -1,29 +1,18 @@
 import { PiePath } from './paths.js';
-import { PieLabel } from './labels.js';
-import * as d3 from 'd3';
+import * as label from '../lib/labels.js';
 import React from 'react';
-/**
- * Returns an array of objects with data for each slice
- * @method generateArcs
- * @param  {[type]}     [sort=null] [description]
- * @return {[type]}     [description]
- */
-
-function generateArcs ({ data, sort, value }) {
-  return d3.pie()
-    .sort(sort)
-    .value((d) => d[value])(data);
-}
-
+import * as arcs from '../lib/arcs.js';
 
 export const PieSlices = ({
   chartHeight,
   chartWidth,
   data,
+  fontSize = '10px',
+  textAnchor = 'middle',
   labels,
   value = 'total',
 }) => {
-  const arcData = generateArcs({
+  const arcData = arcs.generateArcs({
     data,
     sort: null,
     value,
@@ -42,13 +31,18 @@ export const PieSlices = ({
         chartWidth={chartWidth}
         idx={idx}
       />
-      <PieLabel
-        arc={arc}
-        chartHeight={chartHeight}
-        chartWidth={chartWidth}
-        idx={idx}
-        labels={labels}
-      />
+      {
+        label.getLabels({
+          arc,
+          chartHeight,
+          chartType: 'pie',
+          chartWidth,
+          fontSize,
+          idx,
+          labels,
+          textAnchor,
+        })
+      }
     </g>
   ));
 

@@ -22,8 +22,8 @@ export class Examples extends React.Component {
     super(props);
 
     this.state = {
-      containerHeight: 100,
-      containerWidth: 100,
+      containerHeight: 200,
+      containerWidth: 200,
     };
   }
 
