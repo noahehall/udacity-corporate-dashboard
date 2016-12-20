@@ -1,8 +1,11 @@
 import * as d3 from 'd3';
 
+/*
+ * Create/Update Y Axis in the DOM
+ */
 export const getYAxis = ({
-  thisYScale = null,
   id = '',
+  thisYScale = null,
 }) => (
   id && thisYScale && typeof document !== 'undefined'
     ? d3 // eslintignore let d3 handle the axis instead of building ourselves
@@ -14,8 +17,11 @@ export const getYAxis = ({
     : null
 );
 
+/*
+ * Create/Update X Axis and insert it in DOM
+ */
 export const getXAxis = ({
-  id = '', // eslint-disable-line
+  id = '',
   thisXScale = null,
 }) => (
   id && thisXScale && typeof document !== 'undefined'
