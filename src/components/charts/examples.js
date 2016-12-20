@@ -14,7 +14,7 @@ export class Examples extends React.Component {
   static propTypes = {
     barChart: React.PropTypes.object,
     id: React.PropTypes.string,
-    margin: React.PropTypes.object,
+    margins: React.PropTypes.object,
     pieChart: React.PropTypes.object,
   }
 
@@ -76,7 +76,7 @@ export class Examples extends React.Component {
             containerHeight={this.state.containerHeight}
             containerWidth={this.state.containerWidth}
             id='bar-chart'
-            margin={this.props.margin}
+            margins={this.props.margins}
           />
         </section>
         <section
@@ -96,7 +96,7 @@ export class Examples extends React.Component {
             containerHeight={this.state.containerHeight}
             containerWidth={this.state.containerWidth}
             id='pie-chart'
-            margin={this.props.margin}
+            margins={this.props.margins}
           />
         </section>
       </article>
@@ -110,7 +110,7 @@ const mapStateToProps = (state) => {
 
   return {
     barChart: getBarChart(state),
-    margin: margins(state),
+    margins: margins(state),
     pieChart: getPieChart(state),
   };
 };

@@ -2,12 +2,12 @@ import { SVG } from './svg.js';
 import React from 'react';
 
 export const BarChart = ({
-  chart = { data: {}},
+  chart = { data: {}, margins: {}},
   chartType = '',
   containerHeight = 200,
   containerWidth = 200,
   id = 'barchart',
-  margin = {
+  margins = {
     bottom: 20,
     left: 60,
     right: 60,
@@ -20,13 +20,13 @@ export const BarChart = ({
     data={chart.data}
     id={id}
     labels={[ 'lastName', 'total' ]}
-    margin={margin}
+    margins={appFuncs._.isEmpty(chart.margins) ? margins : chart.margins}
     svgHeight={containerHeight}
     svgWidth={containerWidth}
     value='total'
     xAxis={true}
     xScale={true}
-    yAxis={true}
+    yAxis={false}
     yScale={true}
   />;
 
@@ -36,7 +36,7 @@ BarChart.propTypes = {
   containerHeight: React.PropTypes.number,
   containerWidth: React.PropTypes.number,
   id: React.PropTypes.string,
-  margin: React.PropTypes.object,
+  margins: React.PropTypes.object,
 };
 
 export default BarChart;

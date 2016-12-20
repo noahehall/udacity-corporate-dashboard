@@ -17,16 +17,18 @@ export const Bars = ({
   xScale,
   yScale,
 }) => {
+  if (!yScale || !xScale || !chartHeight) return null;
   const rects = [];
   data.forEach((d, i) => {
     rects.push(
-      <g className='bars' key={getLabels(d, labels).replace(/\s+/g, '-').toLowerCase()}>
+      <g className='bar' key={getLabels(d, labels).replace(/\s+/g, '-').toLowerCase()}>
         <Rect
-          className={`rects bar`}
+          className='rect'
           fill={colorScale(i)}
           height={chartHeight - yScale(d[value])}
           width={xScale.bandwidth()}
-          x={xScale(getLabels(d, labels))} // eslintignore `i * (barWidth + barOffset)` if you're not using scaleBands
+          // `i * (barWidth + barOffset)` if you're not using scaleBands
+          x={xScale(getLabels(d, labels))}
           y={yScale(d[value])}
         />
       </g>
@@ -35,3 +37,5 @@ export const Bars = ({
 
   return rects;
 };
+
+export default Bars;
