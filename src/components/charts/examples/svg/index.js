@@ -106,7 +106,10 @@ export const SVG = ({
         />
       }
       { yAxis &&
-        <g className='y axis' />
+        <g
+          className='y axis'
+          transform={`translate(${margins.left}, ${margins.top})`}
+        />
       }
       <section
         id={`${id}-tooltip`}

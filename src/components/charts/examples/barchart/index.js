@@ -26,7 +26,7 @@ export const BarChart = ({
     value='total'
     xAxis={true}
     xScale={true}
-    yAxis={false}
+    yAxis={true}
     yScale={true}
   />;
 
