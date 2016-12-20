@@ -58,7 +58,7 @@ export default {
         },
       ],
       margins: {
-        bottom: 80,
+        bottom: 90,
         left: 60,
         right: 60,
         top: 20,
