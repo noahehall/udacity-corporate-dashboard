@@ -2,8 +2,11 @@ import * as d3 from 'd3';
 import * as d3chromatic from 'd3-scale-chromatic'; // eslintignore https://github.com/d3/d3-scale-chromatic
 import * as label from './labels.js';
 
-// anywhere you need the Y dimension of the bar to scale to the viewport of the svg
-// first send it into this function e.g. below in the Height and Y properties
+/**
+ * create yscale
+ * anywhere you need the Y dimension of the bar to scale to the viewport of the svg
+ * first send it into this function e.g. below in the Height and Y properties
+ */
 export const yScale = ({
   chartHeight,
   chartType = 'bar',
@@ -12,6 +15,7 @@ export const yScale = ({
   switch (chartType.toLowerCase()) {
     case 'pie': return null;
     case 'bar':
+    case 'scatterplot':
     default: {
       return d3
         .scaleLinear()
@@ -21,7 +25,11 @@ export const yScale = ({
   }
 };
 
+/**
+ * retrieve xscale
+ */
 export const getYScale = ({
+  chartType = 'bar',
   data = {},
   margins = {},
   svgHeight = 200,
@@ -32,11 +40,15 @@ export const getYScale = ({
 
   return yScale({
     chartHeight: svgHeight - (margins.top + margins.bottom),
+    chartType,
     dataMaxNumber,
   });
 };
 
-// anywhere you need the X dimension of the bar to scale to the viewport of the svg
+/**
+ * create xscale
+ * anywhere you need the X dimension of the bar to scale to the viewport of the svg
+ */
 export const xScale = ({
   chartType = 'bar',
   chartWidth,
@@ -45,6 +57,7 @@ export const xScale = ({
   switch (chartType.toLowerCase()) {
     case 'pie': return null;
     case 'bar':
+    case 'scatterplot':
     default: {
       return d3
         .scaleBand()
@@ -56,16 +69,29 @@ export const xScale = ({
   }
 };
 
+/**
+ * retrieve xscale
+ */
 export const getXScale = ({
+  chartType = 'bar',
   data,
   labels,
   margins,
   svgWidth,
-}) =>
-  xScale({
-    chartWidth: svgWidth - (margins.left + margins.right),
-    dataLabelsArray: data.map((d) => label.getLabels({ d, labels })),
-  });
+}) => { // eslint-disable-line consistent-return
+  switch (chartType.toLowerCase()) {
+    case 'pie': return null;
+    case 'bar':
+    case 'scatterplot':
+    default: {
+      return xScale({
+        chartType,
+        chartWidth: svgWidth - (margins.left + margins.right),
+        dataLabelsArray: data.map((d) => label.getLabels({ d, labels })),
+      });
+    }
+  }
+};
 
 // set color scale based on
 export const colorScale = (type) => (

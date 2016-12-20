@@ -1,7 +1,6 @@
 import { connect } from 'react-redux';
 import { getBarChart, getMargins, getPieChart } from 'store/selectors';
-import BarChart from './examples/barchart';
-import PieChart from './examples/piechart';
+import Chart from './charts';
 import React from 'react';
 
 export class Examples extends React.Component {
@@ -70,13 +69,20 @@ export class Examples extends React.Component {
             width: '100%',
           }}
         >
-          <BarChart
+          <Chart
             chart={this.props.barChart}
             chartType='bar'
+            colorScale='schemeAccent'
             containerHeight={this.state.containerHeight}
             containerWidth={this.state.containerWidth}
             id='bar-chart'
+            labels={[ 'lastName', 'total' ]}
             margins={this.props.margins}
+            value='total'
+            xAxis={true}
+            xScale={true}
+            yAxis={true}
+            yScale={true}
           />
         </section>
         <section
@@ -90,13 +96,20 @@ export class Examples extends React.Component {
             width: '100%',
           }}
         >
-          <PieChart
+          <Chart
             chart={this.props.pieChart}
             chartType='pie'
+            // implement colorscale for pie charts
             containerHeight={this.state.containerHeight}
             containerWidth={this.state.containerWidth}
             id='pie-chart'
+            labels={[ 'lastName', 'total' ]}
             margins={this.props.margins}
+            value='total'
+            xAxis={false}
+            xScale={false}
+            yAxis={false}
+            yScale={false}
           />
         </section>
       </article>

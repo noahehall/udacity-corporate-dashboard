@@ -85,7 +85,7 @@ export const SVG = ({
       >
         <g
           className={`${chartType.toLowerCase()}-visual-container`}
-          transform={getVisualContainerTransform({chartHeight, chartType, chartWidth})}
+          transform={getVisualContainerTransform({ chartHeight, chartType, chartWidth })}
         >
           {chartFunction({
             chartHeight,
