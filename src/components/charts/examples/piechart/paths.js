@@ -33,9 +33,9 @@ export const PiePath = ({
   });
 
   return <path
+    className={`arc-${idx}`}
     d={thisArc()}
     fill={d3.interpolateCool(Math.random())}
-    id={`arc-${idx}`}
     stroke='gray'
   />;
 };
