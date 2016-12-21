@@ -1,4 +1,5 @@
 // best random generator: https://www.mockaroo.com/
+import scatterPlotData from './fakedata/scatterplot.json';
 export default {
   data: {
     barChart: {
@@ -126,6 +127,9 @@ export default {
           total: 268.50,
         },
       ],
+    },
+    scatterPlot:{
+      data: scatterPlotData,
     },
   },
   msg: 'welcome to your application',
