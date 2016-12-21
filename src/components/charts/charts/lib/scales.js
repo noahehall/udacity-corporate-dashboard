@@ -11,15 +11,25 @@ export const yScale = ({
   chartHeight,
   chartType = 'bar',
   dataMaxNumber,
+  dataMinNumber = 1,
 }) => {
   switch (chartType.toLowerCase()) {
     case 'pie': return null;
-    case 'bar':
     case 'scatterplot':
+    case 'bar':
     default: {
       return d3
         .scaleLinear()
-        .domain([ 0, dataMaxNumber ])
+        .domain([
+          chartType === 'scatterplot'
+            // -1 for scatterplot dots to always be above axis
+            ? dataMinNumber - 1
+            : 0,
+          chartType === 'scatterplot'
+            // +1 for scatterplot dots to always be below axis
+            ? dataMaxNumber + 1
+            : dataMaxNumber,
+        ])
         .range([ chartHeight, 0 ]);
     }
   }
@@ -33,15 +43,29 @@ export const getYScale = ({
   data = {},
   margins = {},
   svgHeight = 200,
-  value = '',
+  yValue = '',
 }) => {
-  if (!value || appFuncs._.isEmpty(data)) return null;
-  const dataMaxNumber = appFuncs._.maxBy(data, (o) => o[value])[value];
+  if (!yValue || appFuncs._.isEmpty(data)) return null;
+  let
+    dataMaxNumber,
+    dataMinNumber;
+
+  switch (chartType.toLowerCase()) {
+    case 'pie': return null;
+    case 'scatterplot': {
+      dataMinNumber = appFuncs._.minBy(data, (o) => o[yValue])[yValue];
+    }
+    case 'bar': // eslint-disable-line no-fallthrough
+    default: {
+      dataMaxNumber = appFuncs._.maxBy(data, (o) => o[yValue])[yValue];
+    }
+  }
 
   return yScale({
     chartHeight: svgHeight - (margins.top + margins.bottom),
     chartType,
     dataMaxNumber,
+    dataMinNumber,
   });
 };
 
@@ -53,11 +77,25 @@ export const xScale = ({
   chartType = 'bar',
   chartWidth,
   dataLabelsArray,
+  dataMinNumber = 1,
+  dataMaxNumber,
 }) => {
   switch (chartType.toLowerCase()) {
     case 'pie': return null;
+    case 'scatterplot': {
+      return d3
+        .scaleLinear()
+        .domain([
+          dataMinNumber > 0
+            // -1 for scatterplot dots to always be above axis
+            ? dataMinNumber - 1
+            : 0,
+          // +1 for scatterplot dots to always be below axis
+          dataMaxNumber + 1
+        ])
+        .range([ chartHeight, 0 ]);
+    }
     case 'bar':
-    case 'scatterplot':
     default: {
       return d3
         .scaleBand()
@@ -79,23 +117,43 @@ export const getXScale = ({
   margins,
   svgWidth,
 }) => { // eslint-disable-line consistent-return
+  const chartWidth = svgWidth - (margins.left + margins.right);
+
   switch (chartType.toLowerCase()) {
     case 'pie': return null;
+    case 'scatterplot': {
+      return xScale({
+        chartType,
+        chartWidth,
+        dataMaxNumber: appFuncs._.maxBy(data, (o) => o[yValue])[yValue],
+        dataMinNumber: appFuncs._.minBy(data, (o) => o[yValue])[yValue],
+      });
+    }
     case 'bar':
-    case 'scatterplot':
     default: {
       return xScale({
         chartType,
-        chartWidth: svgWidth - (margins.left + margins.right),
+        chartWidth,
         dataLabelsArray: data.map((d) => label.getLabels({ d, labels })),
       });
     }
   }
 };
 
-// set color scale based on
-export const colorScale = (type) => (
-  type && d3chromatic[type]
-    ? d3.scaleOrdinal(d3chromatic[type])
-    : null
-);
+// Retrieve color scale
+export const colorScale = ({ colorScaleScheme, colorScaleType = 'categorical' }) => {
+  switch (colorScaleType.toLowerCase()) {
+    case 'categorical': {
+      return colorScaleScheme && d3chromatic[colorScaleScheme]
+        ? d3.scaleOrdinal(d3chromatic[colorScaleScheme])
+        : null;
+    }
+    case 'sequential': {
+      return d3.scaleSequential(d3.interpolatePiYG);
+    }
+    case 'random':
+    default: {
+      return d3.interpolateCool(Math.random());
+    }
+  }
+};

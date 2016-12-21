@@ -12,6 +12,11 @@ export const getPieChart = createSelector(
   (thisData) => thisData.pieChart
 );
 
+export const getScatterPlot = createSelector(
+  [data],
+  (thisData) => thisData.scatterPlot
+);
+
 // https://github.com/reactjs/reselect#sharing-selectors-with-props-across-multiple-components
 export const getMargins = () =>
   createSelector(

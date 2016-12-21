@@ -1,5 +1,10 @@
 import { connect } from 'react-redux';
-import { getBarChart, getMargins, getPieChart } from 'store/selectors';
+import {
+  getBarChart,
+  getMargins,
+  getPieChart,
+  getScatterPlot,
+} from 'store/selectors';
 import Chart from './charts';
 import React from 'react';
 
@@ -15,6 +20,7 @@ export class Examples extends React.Component {
     id: React.PropTypes.string,
     margins: React.PropTypes.object,
     pieChart: React.PropTypes.object,
+    scatterPlotChart: React.PropTypes.object,
   }
 
   constructor (props) {
@@ -72,17 +78,19 @@ export class Examples extends React.Component {
           <Chart
             chart={this.props.barChart}
             chartType='bar'
-            colorScale='schemeAccent'
+            colorScaleScheme='schemeAccent'
+            colorScaleType='categorical'
             containerHeight={this.state.containerHeight}
             containerWidth={this.state.containerWidth}
             id='bar-chart'
             labels={[ 'lastName', 'total' ]}
             margins={this.props.margins}
-            value='total'
+            preserveAspectRatio='xMinYMin meet'
             xAxis={true}
             xScale={true}
             yAxis={true}
             yScale={true}
+            yValue='total'
           />
         </section>
         <section
@@ -99,17 +107,46 @@ export class Examples extends React.Component {
           <Chart
             chart={this.props.pieChart}
             chartType='pie'
-            // implement colorscale for pie charts
             containerHeight={this.state.containerHeight}
             containerWidth={this.state.containerWidth}
             id='pie-chart'
             labels={[ 'lastName', 'total' ]}
             margins={this.props.margins}
-            value='total'
+            preserveAspectRatio='xMinYMin meet'
             xAxis={false}
             xScale={false}
             yAxis={false}
             yScale={false}
+            yValue='total'
+          />
+        </section>
+        <section
+          className='chart-container'
+          style={{
+            display: 'block',
+            maxHeight: '400px',
+            overflow: 'hidden',
+            position: 'relative',
+            verticalAlign: 'top',
+            width: '100%',
+          }}
+        >
+          <Chart
+            chart={this.props.scatterPlotChart}
+            chartType='scatterplot'
+            containerHeight={this.state.containerHeight}
+            containerWidth={this.state.containerWidth}
+            id='scatterplot-chart'
+            labels={[ 'gender', 'age' ]}
+            margins={this.props.margins}
+            preserveAspectRatio='xMinYMin meet'
+            r={3.5}
+            xAxis={false}
+            xScale={false}
+            xValue='hoursWorkedPerWeek'
+            yAxis={false}
+            yScale={false}
+            yValue='salary'
           />
         </section>
       </article>
@@ -125,6 +162,7 @@ const mapStateToProps = (state) => {
     barChart: getBarChart(state),
     margins: margins(state),
     pieChart: getPieChart(state),
+    scatterPlotChart: getScatterPlot(state),
   };
 };
 

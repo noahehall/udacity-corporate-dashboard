@@ -1,7 +1,7 @@
 import { Path } from '../svg/path.js';
 import * as arcs from '../lib/arcs.js';
-import * as d3 from 'd3';
 import * as label from '../lib/labels.js';
+import * as scales from '../lib/scales.js';
 import React from 'react';
 
 export const PieSlices = ({
@@ -11,12 +11,12 @@ export const PieSlices = ({
   fontSize = '10px',
   textAnchor = 'middle',
   labels,
-  value = 'total',
+  yValue = 'total',
 }) => {
   const arcData = arcs.generateArcs({
     data,
     sort: null,
-    value,
+    yValue,
   });
 
   const arcArray = [];
@@ -36,7 +36,7 @@ export const PieSlices = ({
       >
         <Path
           d={thisArc()}
-          fill={d3.interpolateCool(Math.random())}
+          fill={scales.colorScale({ colorScaleType: 'random' })}
           id={`arc-${idx}`}
         />
         {

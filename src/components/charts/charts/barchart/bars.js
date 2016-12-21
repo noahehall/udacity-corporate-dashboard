@@ -7,7 +7,7 @@ export const Bars = ({
   colorScale,
   data,
   labels,
-  value = 'total',
+  yValue = 'total',
   xScale,
   yScale,
 }) => {
@@ -20,11 +20,11 @@ export const Bars = ({
         <Rect
           className='rect'
           fill={colorScale(i)}
-          height={chartHeight - yScale(d[value])}
+          height={chartHeight - yScale(d[yValue])}
           width={xScale.bandwidth()}
           // `i * (barWidth + barOffset)` if you're not using scaleBands
           x={xScale(labelText)}
-          y={yScale(d[value])}
+          y={yScale(d[yValue])}
         />
       </g>
     );
