@@ -17,6 +17,11 @@ export const getScatterPlot = createSelector(
   (thisData) => thisData.scatterPlot
 );
 
+export const getLineChart = createSelector(
+  [data],
+  (thisData) => thisData.lineChart
+);
+
 // https://github.com/reactjs/reselect#sharing-selectors-with-props-across-multiple-components
 export const getMargins = () =>
   createSelector(

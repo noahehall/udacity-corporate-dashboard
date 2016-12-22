@@ -1,6 +1,7 @@
 import { connect } from 'react-redux';
 import {
   getBarChart,
+  getLineChart,
   getMargins,
   getPieChart,
   getScatterPlot,
@@ -18,6 +19,7 @@ export class Examples extends React.Component {
   static propTypes = {
     barChart: React.PropTypes.object,
     id: React.PropTypes.string,
+    lineChart: React.PropTypes.object,
     margins: React.PropTypes.object,
     pieChart: React.PropTypes.object,
     scatterPlotChart: React.PropTypes.object,
@@ -75,14 +77,50 @@ export class Examples extends React.Component {
           }}
         >
           <Chart
+            chart={this.props.lineChart}
+            chartDataGroupBy='artist' // eslintignore only used if xScaleTime = true
+            chartType='line'
+            colorScaleScheme='schemeAccent'
+            colorScaleType='categorical'
+            containerHeight={this.state.containerHeight}
+            containerWidth={this.state.containerWidth}
+            datumLabels={[ 'artist', 'downloads' ]}
+            id='line-chart'
+            margins={this.props.lineChart.margins}
+            preserveAspectRatio='xMinYMin meet'
+            xAxis={true}
+            xAxisLabel='Date'
+            xScale={true}
+            xScaleTime={true}
+            // https://github.com/d3/d3-time-format/blob/master/README.md#locale_format
+            xScaleTimeFormat='%Y/%m/%d'
+            xValue='date'
+            yAxis={true}
+            yAxisLabel='Downloads'
+            yScale={true}
+            yValue='downloads'
+          />
+        </section>
+        <section
+          className='chart-container'
+          style={{
+            display: 'block',
+            maxHeight: '400px',
+            overflow: 'hidden',
+            position: 'relative',
+            verticalAlign: 'top',
+            width: '100%',
+          }}
+        >
+          <Chart
             chart={this.props.scatterPlotChart}
             chartType='scatterplot'
             colorScaleScheme='schemeAccent'
             colorScaleType='categorical'
             containerHeight={this.state.containerHeight}
             containerWidth={this.state.containerWidth}
+            datumLabels={[ 'gender', 'age' ]}
             id='scatterplot-chart'
-            labels={[ 'gender', 'age' ]}
             margins={this.props.scatterPlotChart.margins}
             preserveAspectRatio='xMinYMin meet'
             r={3.5}
@@ -115,8 +153,8 @@ export class Examples extends React.Component {
             colorScaleType='categorical'
             containerHeight={this.state.containerHeight}
             containerWidth={this.state.containerWidth}
+            datumLabels={[ 'lastName', 'total' ]}
             id='bar-chart'
-            labels={[ 'lastName', 'total' ]}
             margins={this.props.barChart.margins}
             preserveAspectRatio='xMinYMin meet'
             xAxis={true}
@@ -144,8 +182,8 @@ export class Examples extends React.Component {
             chartType='pie'
             containerHeight={this.state.containerHeight}
             containerWidth={this.state.containerWidth}
+            datumLabels={[ 'lastName', 'total' ]}
             id='pie-chart'
-            labels={[ 'lastName', 'total' ]}
             margins={this.props.margins}
             preserveAspectRatio='xMinYMin meet'
             xAxis={false}
@@ -166,6 +204,7 @@ const mapStateToProps = (state) => {
 
   return {
     barChart: getBarChart(state),
+    lineChart: getLineChart(state),
     margins: margins(state),
     pieChart: getPieChart(state),
     scatterPlotChart: getScatterPlot(state),

@@ -1,5 +1,6 @@
 // best random generator: https://www.mockaroo.com/
 import scatterPlotData from './fakedata/scatterplot.json';
+import lineChartData from './fakedata/linechart.json';
 export default {
   data: {
     barChart: {
@@ -65,6 +66,15 @@ export default {
         top: 20,
       }
     },
+    lineChart: {
+      data: lineChartData,
+      margins: {
+        bottom: 60,
+        left: 60,
+        right: 60,
+        top: 20,
+      },
+    },
     margins: {
       bottom: 20,
       left: 60,
@@ -128,7 +138,7 @@ export default {
         },
       ],
     },
-    scatterPlot:{
+    scatterPlot: {
       data: scatterPlotData,
       margins: {
         bottom: 40,
