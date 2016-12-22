@@ -130,6 +130,12 @@ export default {
     },
     scatterPlot:{
       data: scatterPlotData,
+      margins: {
+        bottom: 90,
+        left: 60,
+        right: 60,
+        top: 20,
+      },
     },
   },
   msg: 'welcome to your application',
