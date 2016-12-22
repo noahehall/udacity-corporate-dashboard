@@ -1,0 +1,65 @@
+[
+{"downloads":4951,"date":"2016/01/04","artist":"Margaret"},
+{"downloads":1940,"date":"2016/02/11","artist":"Margaret"},
+{"downloads":9709,"date":"2016/03/13","artist":"Margaret"},
+{"downloads":9961,"date":"2016/04/25","artist":"Margaret"},
+{"downloads":4583,"date":"2016/05/24","artist":"Margaret"},
+{"downloads":1317,"date":"2016/06/10","artist":"Margaret"},
+{"downloads":7875,"date":"2016/07/26","artist":"Margaret"},
+{"downloads":2384,"date":"2016/08/18","artist":"Margaret"},
+{"downloads":3544,"date":"2016/09/07","artist":"Margaret"},
+{"downloads":9106,"date":"2016/10/08","artist":"Margaret"},
+{"downloads":7106,"date":"2016/11/28","artist":"Margaret"},
+{"downloads":7106,"date":"2016/12/28","artist":"Margaret"},
+{
+  "downloads": 5662,
+  "date": "2016/01/14",
+  "artist": "Lisa"
+}, {
+  "downloads": 9806,
+  "date": "2016/02/15",
+  "artist": "Lisa"
+}, {
+  "downloads": 4722,
+  "date": "2016/03/24",
+  "artist": "Lisa"
+}, {
+  "downloads": 6051,
+  "date": "2016/04/19",
+  "artist": "Lisa"
+}, {
+  "downloads": 8077,
+  "date": "2016/05/13",
+  "artist": "Lisa"
+}, {
+  "downloads": 5988,
+  "date": "2016/06/30",
+  "artist": "Lisa"
+}, {
+  "downloads": 1403,
+  "date": "2016/07/01",
+  "artist": "Lisa"
+}, {
+  "downloads": 1887,
+  "date": "2016/08/23",
+  "artist": "Lisa"
+}, {
+  "downloads": 1806,
+  "date": "2016/09/25",
+  "artist": "Lisa"
+}, {
+  "downloads": 5718,
+  "date": "2016/10/18",
+  "artist": "Lisa"
+},
+{
+  "downloads": 5718,
+  "date": "2016/11/18",
+  "artist": "Lisa"
+},
+{
+  "downloads": 5718,
+  "date": "2016/12/18",
+  "artist": "Lisa"
+}
+]
