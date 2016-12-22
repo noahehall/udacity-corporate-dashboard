@@ -59,7 +59,7 @@ export default {
         },
       ],
       margins: {
-        bottom: 90,
+        bottom: 100,
         left: 60,
         right: 60,
         top: 20,
@@ -131,7 +131,7 @@ export default {
     scatterPlot:{
       data: scatterPlotData,
       margins: {
-        bottom: 90,
+        bottom: 40,
         left: 60,
         right: 60,
         top: 20,
