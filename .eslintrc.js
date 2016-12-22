@@ -18,6 +18,9 @@ module.exports = {
       }
     ],
     'no-extra-parens': 0,
-    'no-mixed-operators': 0
+    'no-mixed-operators': 0,
+    "react/no-multi-comp": [2, {
+      "ignoreStateless": true
+    }]
   }
 }

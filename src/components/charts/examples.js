@@ -87,9 +87,11 @@ export class Examples extends React.Component {
             preserveAspectRatio='xMinYMin meet'
             r={3.5}
             xAxis={true}
+            xAxisLabel='hours per week'
             xScale={true}
             xValue='hoursWorkedPerWeek'
             yAxis={true}
+            yAxisLabel='salary'
             yScale={true}
             yValue='salary'
           />
@@ -118,8 +120,10 @@ export class Examples extends React.Component {
             margins={this.props.barChart.margins}
             preserveAspectRatio='xMinYMin meet'
             xAxis={true}
+            xAxisLabel='person and total'
             xScale={true}
             yAxis={true}
+            yAxisLabel='total'
             yScale={true}
             yValue='total'
           />
