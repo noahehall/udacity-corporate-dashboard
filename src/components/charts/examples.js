@@ -65,6 +65,37 @@ export class Examples extends React.Component {
       >
         <section
           className='chart-container'
+          style={{
+            display: 'block',
+            maxHeight: '400px',
+            overflow: 'hidden',
+            position: 'relative',
+            verticalAlign: 'top',
+            width: '100%',
+          }}
+        >
+          <Chart
+            chart={this.props.scatterPlotChart}
+            chartType='scatterplot'
+            colorScaleScheme='schemeAccent'
+            colorScaleType='categorical'
+            containerHeight={this.state.containerHeight}
+            containerWidth={this.state.containerWidth}
+            id='scatterplot-chart'
+            labels={[ 'gender', 'age' ]}
+            margins={this.props.scatterPlotChart.margins}
+            preserveAspectRatio='xMinYMin meet'
+            r={3.5}
+            xAxis={true}
+            xScale={true}
+            xValue='hoursWorkedPerWeek'
+            yAxis={true}
+            yScale={true}
+            yValue='salary'
+          />
+        </section>
+        <section
+          className='chart-container'
           ref={(container) => this.container = container}
           style={{
             display: 'block',
@@ -84,7 +115,7 @@ export class Examples extends React.Component {
             containerWidth={this.state.containerWidth}
             id='bar-chart'
             labels={[ 'lastName', 'total' ]}
-            margins={this.props.margins}
+            margins={this.props.barChart.margins}
             preserveAspectRatio='xMinYMin meet'
             xAxis={true}
             xScale={true}
@@ -118,35 +149,6 @@ export class Examples extends React.Component {
             yAxis={false}
             yScale={false}
             yValue='total'
-          />
-        </section>
-        <section
-          className='chart-container'
-          style={{
-            display: 'block',
-            maxHeight: '400px',
-            overflow: 'hidden',
-            position: 'relative',
-            verticalAlign: 'top',
-            width: '100%',
-          }}
-        >
-          <Chart
-            chart={this.props.scatterPlotChart}
-            chartType='scatterplot'
-            containerHeight={this.state.containerHeight}
-            containerWidth={this.state.containerWidth}
-            id='scatterplot-chart'
-            labels={[ 'gender', 'age' ]}
-            margins={this.props.margins}
-            preserveAspectRatio='xMinYMin meet'
-            r={3.5}
-            xAxis={false}
-            xScale={false}
-            xValue='hoursWorkedPerWeek'
-            yAxis={false}
-            yScale={false}
-            yValue='salary'
           />
         </section>
       </article>

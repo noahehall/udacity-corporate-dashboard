@@ -29,10 +29,12 @@ export const PieSlices = ({
       startAngle: arc.startAngle,
     });
 
+    const labelText = label.getLabelText({ chartType: 'simple', d: arc.data, labels });
+
     arcArray.push(
       <g
         className='pie-slice'
-        key={idx}
+        key={`${labelText.replace(/\s+/g, '-').toLowerCase()}${idx}`}
       >
         <Path
           d={thisArc()}

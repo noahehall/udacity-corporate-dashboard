@@ -59,10 +59,27 @@ export const Chart = ({
     data = chart.data,
     hasDocument = typeof document !== 'undefined',
     thisXScale = xScale
-      ? scales.getXScale({ data, labels, margins, svgWidth: containerWidth })
+      ? scales.getXScale({
+        chartHeight,
+        chartType,
+        chartWidth,
+        data,
+        labels,
+        margins,
+        svgWidth: containerWidth,
+        xValue
+      })
       : null,
     thisYScale = yScale
-      ? scales.getYScale({ data, margins, svgHeight: containerHeight, yValue })
+      ? scales.getYScale({
+        chartHeight,
+        chartType,
+        chartWidth,
+        data,
+        margins,
+        svgHeight: containerHeight,
+        yValue,
+      })
       : null;
 
   if (yAxis && thisYScale && hasDocument) axes.getYAxis({ id, thisYScale });
@@ -89,6 +106,7 @@ export const Chart = ({
         >
           {chartFunction({
             chartHeight,
+            chartType,
             chartWidth,
             colorScale,
             colorScaleScheme,

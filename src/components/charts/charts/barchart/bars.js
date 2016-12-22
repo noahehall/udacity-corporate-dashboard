@@ -16,7 +16,7 @@ export const Bars = ({
   data.forEach((d, i) => {
     const labelText = label.getLabelText({ chartType: 'bar', d, labels });
     rects.push(
-      <g className='bar' key={labelText.replace(/\s+/g, '-').toLowerCase()}>
+      <g className='bar' key={`${labelText.replace(/\s+/g, '-').toLowerCase()}${i}`}>
         <Rect
           className='rect'
           fill={colorScale(i)}

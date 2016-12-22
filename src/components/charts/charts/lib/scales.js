@@ -39,8 +39,10 @@ export const yScale = ({
  * retrieve xscale
  */
 export const getYScale = ({
+  // chartHeight = 200,
   chartType = 'bar',
   data = {},
+  // chartWidth = 200,
   margins = {},
   svgHeight = 200,
   yValue = '',
@@ -74,11 +76,12 @@ export const getYScale = ({
  * anywhere you need the X dimension of the bar to scale to the viewport of the svg
  */
 export const xScale = ({
+  // chartHeight = 200,
   chartType = 'bar',
-  chartWidth,
+  chartWidth = 200,
   dataLabelsArray,
   dataMinNumber = 1,
-  dataMaxNumber,
+  dataMaxNumber = 1,
 }) => {
   switch (chartType.toLowerCase()) {
     case 'pie': return null;
@@ -93,7 +96,7 @@ export const xScale = ({
           // +1 for scatterplot dots to always be below axis
           dataMaxNumber + 1
         ])
-        .range([ chartHeight, 0 ]);
+        .range([ 0, chartWidth ]);
     }
     case 'bar':
     default: {
@@ -116,17 +119,29 @@ export const getXScale = ({
   labels,
   margins,
   svgWidth,
+  xValue,
 }) => { // eslint-disable-line consistent-return
   const chartWidth = svgWidth - (margins.left + margins.right);
 
   switch (chartType.toLowerCase()) {
     case 'pie': return null;
     case 'scatterplot': {
+      let dataMaxNumber, dataMinNumber;
+
+      try {
+        dataMaxNumber = appFuncs._.maxBy(data, (o) => o[xValue])[xValue];
+        dataMinNumber = appFuncs._.minBy(data, (o) => o[xValue])[xValue];
+      } catch (err) {
+        appFuncs.console('error')(err);
+
+        return null;
+      }
+
       return xScale({
         chartType,
         chartWidth,
-        dataMaxNumber: appFuncs._.maxBy(data, (o) => o[yValue])[yValue],
-        dataMinNumber: appFuncs._.minBy(data, (o) => o[yValue])[yValue],
+        dataMaxNumber,
+        dataMinNumber,
       });
     }
     case 'bar':
