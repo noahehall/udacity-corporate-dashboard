@@ -1,8 +1,8 @@
 // best random generator: https://www.mockaroo.com/
 import scatterPlotData from './fakedata/scatterplot.json';
-import lineChartData from './fakedata/linechart.json';
 import employeesAtLocations from './fakedata/employeesatlocations.json';
 import openIssues from './fakedata/openissues.json';
+import payingCustomers from './fakedata/payingcustomers.json';
 
 export default {
   data: {
@@ -69,21 +69,21 @@ export default {
         top: 20,
       },
     },
-    lineChart: {
-      data: lineChartData,
-      margins: {
-        bottom: 60,
-        left: 60,
-        right: 60,
-        top: 20,
-      },
-    },
     openIssues: {
       data: openIssues,
       margins: {
         bottom: 20,
         left: 20,
         right: 20,
+        top: 20,
+      },
+    },
+    payingCustomers: {
+      data: payingCustomers,
+      margins: {
+        bottom: 60,
+        left: 60,
+        right: 60,
         top: 20,
       },
     },

@@ -22,9 +22,9 @@ export const getScatterPlot = createSelector(
   (thisData) => thisData.scatterPlot
 );
 
-export const getLineChart = createSelector(
+export const getPayingCustomers = createSelector(
   [data],
-  (thisData) => thisData.lineChart
+  (thisData) => thisData.payingCustomers
 );
 
 // https://github.com/reactjs/reselect#sharing-selectors-with-props-across-multiple-components

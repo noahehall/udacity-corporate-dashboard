@@ -1,10 +1,10 @@
 import { connect } from 'react-redux';
 import {
-  getLineChart,
   getMargins,
   getOpenIssues,
-  getTotalEmployees,
+  getPayingCustomers,
   getScatterPlot,
+  getTotalEmployees,
 } from 'store/selectors';
 import Chart from './charts';
 import React from 'react';
@@ -18,9 +18,9 @@ export class Examples extends React.Component {
 
   static propTypes = {
     id: React.PropTypes.string,
-    lineChart: React.PropTypes.object,
     margins: React.PropTypes.object,
     openIssues: React.PropTypes.object,
+    payingCustomers: React.PropTypes.object,
     scatterPlotChart: React.PropTypes.object,
     totalEmployees: React.PropTypes.object,
   }
@@ -170,28 +170,28 @@ export class Examples extends React.Component {
           }}
         >
           <Chart
-            chart={this.props.lineChart}
-            chartDataGroupBy='artist' // eslintignore only used if xScaleTime = true
+            chart={this.props.payingCustomers}
+            chartDataGroupBy='type'
             chartType='line'
-            colorScaleScheme='schemeAccent'
-            colorScaleType='chromatic'
+            colorScaleScheme='schemeCategory20'
+            colorScaleType='basic'
             containerHeight={this.state.containerHeight}
             containerWidth={this.state.containerWidth}
-            datumLabels={[ 'artist', 'downloads' ]}
-            id='line-chart'
-            margins={this.props.lineChart.margins}
+            datumLabels={['total']}
+            id='paying-customers'
+            margins={this.props.payingCustomers.margins}
             preserveAspectRatio='xMinYMin meet'
+            r=''
             xAxis={true}
             xAxisLabel='Date'
             xScale={true}
             xScaleTime={true}
-            // https://github.com/d3/d3-time-format/blob/master/README.md#locale_format
             xScaleTimeFormat='%Y/%m/%d'
             xValue='date'
             yAxis={true}
-            yAxisLabel='Downloads'
+            yAxisLabel='Total'
             yScale={true}
-            yValue='downloads'
+            yValue='totalPayingCustomers'
           />
         </section>
         <section
@@ -237,9 +237,9 @@ const mapStateToProps = (state) => {
   const margins = getMargins();
 
   return {
-    lineChart: getLineChart(state),
     margins: margins(state),
     openIssues: getOpenIssues(state),
+    payingCustomers: getPayingCustomers(state),
     scatterPlotChart: getScatterPlot(state),
     totalEmployees: getTotalEmployees(state),
   };

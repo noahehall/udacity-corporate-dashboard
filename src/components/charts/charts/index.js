@@ -21,7 +21,7 @@ export const getVisualContainerTransform = ({
 
 export const Chart = ({
   chart = { data: {}, margins: {}},
-  chartDataGroupBy = '',
+  chartDataGroupBy = '', // eslintignore required for line chart
   // bar|scatterplot|pie|line
   // scatterplot: requires x and y values to be integers
   chartType = '',
@@ -36,13 +36,13 @@ export const Chart = ({
   xAxis = false,
   xAxisLabel = '',
   xScale = false,
-  xScaleTime = false, // eslint-disable-line
-  xScaleTimeFormat = '',
+  xScaleTime = false, // eslintignore required for line chart
+  xScaleTimeFormat = '', // eslintignore required for line chart https://github.com/d3/d3-time-format/blob/master/README.md#locale_format
   xValue = '',
   yAxis = false,
   yAxisLabel = '',
   yScale = false,
-  yValue = 'total',
+  yValue = 'total', // eslintignore used for pie chart slice arc
 }) => {
   if (appFuncs._.isEmpty(chart.data)) return null;
   let chartFunction;
