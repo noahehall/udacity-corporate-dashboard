@@ -46,6 +46,7 @@ export const Chart = ({
 }) => {
   if (appFuncs._.isEmpty(chart.data)) {
     appFuncs.logError({
+      loc: __filename,
       msg: 'You need data to create a chart, return null',
       obj: [chart],
     });
@@ -68,7 +69,10 @@ export const Chart = ({
       chartFunction = Lines;
       break;
     default : {
-      appFuncs.logError({ msg: `did not find chart type ${chartType}, returning null`});
+      appFuncs.logError({
+        loc: __filename,
+        msg: `did not find chart type ${chartType}, returning null`,
+      });
 
       return null;
     }

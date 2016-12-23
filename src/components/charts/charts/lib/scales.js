@@ -16,6 +16,7 @@ export const yScale = ({
   if (!chartType) {
     appFuncs.logError({
       arr: [ chartHeight, chartType, dataMinNumber, dataMaxNumber ],
+      loc: __filename,
       msg: `chart type cannot be undefined for scales.yScale(), returning null`,
     });
 
@@ -30,6 +31,7 @@ export const yScale = ({
       if (chartHeight < 0 || dataMaxNumber < 0) {
         appFuncs.logError({
           arr: [ chartHeight, chartType, dataMaxNumber, dataMinNumber ],
+          loc: __filename,
           msg: 'all values should be defined and above 0 for scales.yScale(), returning null',
         });
 
@@ -69,6 +71,7 @@ export const getYScale = ({
   if (!yValue || !chartType || appFuncs._.isEmpty(data)) {
     appFuncs.logError({
       arr: [ chartType, data, yValue ],
+
       msg: 'yValue, chartType and data need to be valid variables for scales.getYScale(), returning null',
     });
 
@@ -93,8 +96,12 @@ export const getYScale = ({
         dataMinNumber = appFuncs._.minBy(thisData, (o) => o[yValue])[yValue];
       } catch (err) {
         appFuncs.logError({
-          arr: [ thisData, yValue ],
+          arr: [
+            thisData,
+            yValue,
+          ],
           err,
+          loc: __filename,
           msg: 'error creating dataMinNumber for scatterplot chart in scales.getYScale()',
         });
       }
@@ -105,8 +112,12 @@ export const getYScale = ({
         dataMaxNumber = appFuncs._.maxBy(thisData, (o) => o[yValue])[yValue];
       } catch (err) {
         appFuncs.logError({
-          arr: [ thisData, yValue ],
+          arr: [
+            thisData,
+            yValue,
+          ],
           err,
+          loc: __filename,
           msg: 'error creating dataManNumber for bar chrt chart in scales.getYScale()',
         });
       }
@@ -136,6 +147,7 @@ export const xScale = ({
 }) => {
   if (!chartType) {
     appFuncs.logError({
+      loc: __filename,
       msg: `chart type (${chartType}) needs to be a valid chart type for scales.xScale(), returning null`
     });
 
@@ -152,6 +164,7 @@ export const xScale = ({
       }
       default: {
         appFuncs.logError({
+          loc: __filename,
           msg: `chartType ${chartType} not setup for xScaleTime in scales.xScale(), returning null`
         });
 
@@ -178,6 +191,7 @@ export const xScale = ({
       if (!dataLabelsArray.length)
         appFuncs.logError({
           arr: [ chartType, dataLabaelsArray ],
+
           msg: `dataLabaelsArray cannot be empty in scales.xScale(), attempting to create and return xScale anyway`,
         });
 
@@ -213,7 +227,11 @@ export const getXScale = ({
 }) => { // eslint-disable-line consistent-return
   if (appFuncs._.isEmpty(data)) {
     appFuncs.logError({
-      arr: [ chartType, data ],
+      arr: [
+        chartType,
+        data,
+      ],
+      loc: __filename,
       msg: `data must be a valid variable in scales.getXScale(), returning null`
     });
 
@@ -240,8 +258,12 @@ export const getXScale = ({
         dataMaxNumber = appFuncs._.maxBy(thisData, (o) => o[xValue])[xValue];
       } catch (err) {
         appFuncs.logError({
-          arr: [ thisData, xValue ],
+          arr: [
+            thisData,
+            xValue,
+          ],
           err,
+          loc: __filename,
           msg: 'error creating dataMaxNumber for scatterplot chart in scales.getXScale()',
         });
       }
@@ -250,8 +272,12 @@ export const getXScale = ({
         dataMinNumber = appFuncs._.minBy(thisData, (o) => o[xValue])[xValue];
       } catch (err) {
         appFuncs.logError({
-          arr: [ thisData, xValue ],
+          arr: [
+            thisData,
+            xValue,
+          ],
           err,
+          loc: __filename,
           msg: 'error creating dataMixNumber for scatterplot chart in scales.getXScale()',
         });
       }
@@ -287,6 +313,7 @@ export const colorScale = ({
         return d3.scaleOrdinal(d3[colorScaleScheme]);
 
       appFuncs.logError({
+        loc: __filename,
         msg: `Scheme ${colorScaleScheme} does not exist for Scale type ${colorScaleType}, returning default schemeCategory20`
       });
 
@@ -300,6 +327,7 @@ export const colorScale = ({
         return d3.scaleOrdinal(d3chromatic[colorScaleScheme]);
 
       appFuncs.logError({
+        loc: __filename,
         msg: `Scheme ${colorScaleScheme} does not exist for Scale type ${colorScaleType}, returning ${schemeAccent}`
       });
 
@@ -314,6 +342,7 @@ export const colorScale = ({
     case 'random':
     default: {
       appFuncs.logError({
+        loc: __filename,
         msg: `Scheme ${colorScaleScheme} does not exist for Scale type ${colorScaleType}, returning ${interpolateCool}`
       });
 

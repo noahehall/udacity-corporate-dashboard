@@ -18,6 +18,7 @@ export const Bars = ({
         yScale,
         yValue,
       ],
+      loc: __filename,
       msg: 'yScale, yValue and xScale must be valid variables in Bars(), returning null',
     });
 
