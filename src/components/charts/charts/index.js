@@ -25,13 +25,13 @@ export const Chart = ({
   // bar|scatterplot|pie|line
   // scatterplot: requires x and y values to be integers
   chartType = '',
-  colorScaleScheme = 'schemeAccent',
-  colorScaleType = 'categorical',
+  colorScaleScheme = '',
+  colorScaleType = '',
   containerHeight = 200,
   containerWidth = 200,
   datumLabels = [],
-  id = 'barchart',
-  margins = { bottom: 20, left: 60, right: 60, top: 20 },
+  id = '',
+  margins = { },
   preserveAspectRatio = 'xMinYMin meet',
   xAxis = false,
   xAxisLabel = '',
@@ -42,9 +42,17 @@ export const Chart = ({
   yAxis = false,
   yAxisLabel = '',
   yScale = false,
-  yValue = 'total', // eslintignore used for pie chart slice arc
+  yValue = '', // eslintignore used for pie chart slice arc
 }) => {
-  if (appFuncs._.isEmpty(chart.data)) return null;
+  if (appFuncs._.isEmpty(chart.data)) {
+    appFuncs.logError({
+      msg: 'You need data to create a chart, return null',
+      obj: [chart],
+    });
+
+    return null;
+  }
+
   let chartFunction;
   switch (chartType.toLowerCase()) {
     case 'pie':
@@ -59,7 +67,11 @@ export const Chart = ({
     case 'line':
       chartFunction = Lines;
       break;
-    default : return <span />;
+    default : {
+      appFuncs.logError({ msg: `did not find chart type ${chartType}, returning null`});
+
+      return null;
+    }
   }
 
   const
