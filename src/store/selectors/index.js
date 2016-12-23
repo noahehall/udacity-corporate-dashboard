@@ -2,9 +2,9 @@ import { createSelector } from 'reselect';
 
 export const data = (state) => state.data;
 
-export const getBarChart = createSelector(
+export const getNewIssues = createSelector(
   [data],
-  (thisData) => thisData.barChart
+  (thisData) => thisData.newIssues
 );
 
 export const getOpenIssues = createSelector(
@@ -15,11 +15,6 @@ export const getOpenIssues = createSelector(
 export const getTotalEmployees = createSelector(
   [data],
   (thisData) => thisData.totalEmployees
-);
-
-export const getScatterPlot = createSelector(
-  [data],
-  (thisData) => thisData.scatterPlot
 );
 
 export const getPayingCustomers = createSelector(

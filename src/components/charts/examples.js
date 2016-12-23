@@ -1,9 +1,9 @@
 import { connect } from 'react-redux';
 import {
   getMargins,
+  getNewIssues,
   getOpenIssues,
   getPayingCustomers,
-  getScatterPlot,
   getTotalEmployees,
 } from 'store/selectors';
 import Chart from './charts';
@@ -19,9 +19,9 @@ export class Examples extends React.Component {
   static propTypes = {
     id: React.PropTypes.string,
     margins: React.PropTypes.object,
+    newIssues: React.PropTypes.object,
     openIssues: React.PropTypes.object,
     payingCustomers: React.PropTypes.object,
-    scatterPlotChart: React.PropTypes.object,
     totalEmployees: React.PropTypes.object,
   }
 
@@ -143,7 +143,7 @@ export class Examples extends React.Component {
             containerWidth={this.state.containerWidth}
             datumLabels={[ 'status', 'total' ]}
             id='open-issues'
-            margins={this.props.totalEmployees.margins}
+            margins={this.props.openIssues.margins}
             preserveAspectRatio='xMinYMin meet'
             r=''
             xAxis={false}
@@ -189,7 +189,7 @@ export class Examples extends React.Component {
             xScaleTimeFormat='%Y/%m/%d'
             xValue='date'
             yAxis={true}
-            yAxisLabel='Total'
+            yAxisLabel='Total Paying Customers'
             yScale={true}
             yValue='totalPayingCustomers'
           />
@@ -206,25 +206,28 @@ export class Examples extends React.Component {
           }}
         >
           <Chart
-            chart={this.props.scatterPlotChart}
-            chartType='scatterplot'
-            colorScaleScheme='schemeAccent'
-            colorScaleType='chromatic'
+            chart={this.props.newIssues}
+            chartDataGroupBy=''
+            chartType='bar'
+            colorScaleScheme='schemeCategory20'
+            colorScaleType='basic'
             containerHeight={this.state.containerHeight}
             containerWidth={this.state.containerWidth}
-            datumLabels={[ 'gender', 'age' ]}
-            id='scatterplot-chart'
-            margins={this.props.scatterPlotChart.margins}
+            datumLabels={['total']}
+            id='new-issues'
+            margins={this.props.newIssues.margins}
             preserveAspectRatio='xMinYMin meet'
-            r={3.5}
+            r=''
             xAxis={true}
-            xAxisLabel='hours per week'
+            xAxisLabel='Date'
             xScale={true}
-            xValue='hoursWorkedPerWeek'
+            xScaleTime={true}
+            xScaleTimeFormat='%Y/%m/%d'
+            xValue='date'
             yAxis={true}
-            yAxisLabel='salary'
+            yAxisLabel='Total New Issues'
             yScale={true}
-            yValue='salary'
+            yValue='total'
           />
         </section>
       </article>
@@ -238,9 +241,9 @@ const mapStateToProps = (state) => {
 
   return {
     margins: margins(state),
+    newIssues: getNewIssues(state),
     openIssues: getOpenIssues(state),
     payingCustomers: getPayingCustomers(state),
-    scatterPlotChart: getScatterPlot(state),
     totalEmployees: getTotalEmployees(state),
   };
 };
