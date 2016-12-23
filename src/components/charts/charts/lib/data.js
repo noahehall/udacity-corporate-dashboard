@@ -1,12 +1,12 @@
 import * as time from './time.js';
 
 export const format = ({
-  chartDataGroupBy,
-  chartType,
+  chartDataGroupBy = '',
+  chartType = '',
   data,
   xScaleTime,
   xScaleTimeFormat,
-  xValue,
+  xValue = '',
 }) => {
   switch (chartType.toLowerCase()) {
     case 'line': {
@@ -18,7 +18,7 @@ export const format = ({
     case 'scatterplot': // eslint-disable-line
     case 'bar':
     case 'pie':
-    default: return data; // eslint-disable-line
+    default: return data;
   }
   // group all values by groupby
   const lineValues = appFuncs._.groupBy(data, (d) => d[chartDataGroupBy]);
@@ -26,6 +26,7 @@ export const format = ({
   if (appFuncs._.isEmpty(lineValues)) {
     appFuncs.logError({
       arr: [ data, lineValues ],
+      loc: __filename,
       msg: `could not create groups for data on key ${chartDataGroupBy}, returning data`,
     });
 
