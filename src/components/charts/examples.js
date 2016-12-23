@@ -1,10 +1,10 @@
 import { connect } from 'react-redux';
 import {
-  getBarChart,
-  getLineChart,
   getMargins,
-  getPieChart,
+  getOpenIssues,
+  getPayingCustomers,
   getScatterPlot,
+  getTotalEmployees,
 } from 'store/selectors';
 import Chart from './charts';
 import React from 'react';
@@ -17,12 +17,12 @@ export class Examples extends React.Component {
   }
 
   static propTypes = {
-    barChart: React.PropTypes.object,
     id: React.PropTypes.string,
-    lineChart: React.PropTypes.object,
     margins: React.PropTypes.object,
-    pieChart: React.PropTypes.object,
+    openIssues: React.PropTypes.object,
+    payingCustomers: React.PropTypes.object,
     scatterPlotChart: React.PropTypes.object,
+    totalEmployees: React.PropTypes.object,
   }
 
   constructor (props) {
@@ -49,9 +49,27 @@ export class Examples extends React.Component {
   }
 
   setSize = () => {
+    let containerHeight, containerWidth;
+
+    try {
+      containerHeight = this.container.offsetHeight;
+    } catch (err) {
+      appFuncs.console('error')(err);
+      appFuncs.console('dir')(this.container);
+      containerHeight = 200;
+    }
+
+    try {
+      containerWidth = this.container.offsetWidth;
+    } catch (err) {
+      appFuncs.console('error')(err);
+      appFuncs.console('dir')(this.container);
+      containerWidth = 200;
+    }
+
     this.setState({
-      containerHeight: this.container.offsetHeight,
-      containerWidth: this.container.offsetWidth,
+      containerHeight,
+      containerWidth,
     });
 
     return true;
@@ -67,6 +85,7 @@ export class Examples extends React.Component {
       >
         <section
           className='chart-container'
+          ref={(container) => this.container = container}
           style={{
             display: 'block',
             maxHeight: '400px',
@@ -77,28 +96,102 @@ export class Examples extends React.Component {
           }}
         >
           <Chart
-            chart={this.props.lineChart}
-            chartDataGroupBy='artist' // eslintignore only used if xScaleTime = true
-            chartType='line'
-            colorScaleScheme='schemeAccent'
-            colorScaleType='categorical'
+            // https://github.com/d3/d3-time-format/blob/master/README.md#locale_format
+            chart={this.props.totalEmployees}
+            chartDataGroupBy='' // eslintignore only used if xScaleTime = true
+            chartType='bar' // eslintignore requires x and y axis to have integer values
+            colorScaleScheme='schemeCategory20'
+            colorScaleType='basic'
             containerHeight={this.state.containerHeight}
             containerWidth={this.state.containerWidth}
-            datumLabels={[ 'artist', 'downloads' ]}
-            id='line-chart'
-            margins={this.props.lineChart.margins}
+            datumLabels={['location']}
+            id='employees-at-each-location'
+            margins={this.props.totalEmployees.margins}
             preserveAspectRatio='xMinYMin meet'
+            r={3.5}
+            xAxis={true}
+            xAxisLabel='Employees at Each Location'
+            xScale={true}
+            xScaleTime={false}
+            xScaleTimeFormat='' // eslintlignore must match the format of your dates
+            xValue='location'
+            yAxis={true}
+            yAxisLabel='Total Employees'
+            yScale={true}
+            yValue='totalEmployees' // eslintignore used for pie chart as well
+          />
+        </section>
+        <section
+          className='chart-container'
+          style={{
+            display: 'block',
+            maxHeight: '400px',
+            overflow: 'hidden',
+            position: 'relative',
+            verticalAlign: 'top',
+            width: '100%',
+          }}
+        >
+          <Chart
+            // https://github.com/d3/d3-time-format/blob/master/README.md#locale_format
+            chart={this.props.openIssues}
+            chartDataGroupBy='' // eslintignore only used if xScaleTime = true
+            chartType='pie'
+            colorScaleScheme='schemeCategory20'
+            colorScaleType='basic'
+            containerHeight={this.state.containerHeight}
+            containerWidth={this.state.containerWidth}
+            datumLabels={[ 'status', 'total' ]}
+            id='open-issues'
+            margins={this.props.totalEmployees.margins}
+            preserveAspectRatio='xMinYMin meet'
+            r=''
+            xAxis={false}
+            xAxisLabel=''
+            xScale={false}
+            xScaleTime={false}
+            xScaleTimeFormat='' // eslintlignore must match the format of your dates
+            xValue=''
+            yAxis={false}
+            yAxisLabel=''
+            yScale={true}
+            yValue='total' // eslintignore used for pie chart slice size as well
+          />
+        </section>
+        <section
+          className='chart-container'
+          style={{
+            display: 'block',
+            maxHeight: '400px',
+            overflow: 'hidden',
+            position: 'relative',
+            verticalAlign: 'top',
+            width: '100%',
+          }}
+        >
+          <Chart
+            chart={this.props.payingCustomers}
+            chartDataGroupBy='type'
+            chartType='line'
+            colorScaleScheme='schemeCategory20'
+            colorScaleType='basic'
+            containerHeight={this.state.containerHeight}
+            containerWidth={this.state.containerWidth}
+            datumLabels={['total']}
+            id='paying-customers'
+            margins={this.props.payingCustomers.margins}
+            preserveAspectRatio='xMinYMin meet'
+            r=''
             xAxis={true}
             xAxisLabel='Date'
             xScale={true}
             xScaleTime={true}
-            // https://github.com/d3/d3-time-format/blob/master/README.md#locale_format
             xScaleTimeFormat='%Y/%m/%d'
             xValue='date'
             yAxis={true}
-            yAxisLabel='Downloads'
+            yAxisLabel='Total'
             yScale={true}
-            yValue='downloads'
+            yValue='totalPayingCustomers'
           />
         </section>
         <section
@@ -116,7 +209,7 @@ export class Examples extends React.Component {
             chart={this.props.scatterPlotChart}
             chartType='scatterplot'
             colorScaleScheme='schemeAccent'
-            colorScaleType='categorical'
+            colorScaleType='chromatic'
             containerHeight={this.state.containerHeight}
             containerWidth={this.state.containerWidth}
             datumLabels={[ 'gender', 'age' ]}
@@ -134,65 +227,6 @@ export class Examples extends React.Component {
             yValue='salary'
           />
         </section>
-        <section
-          className='chart-container'
-          ref={(container) => this.container = container}
-          style={{
-            display: 'block',
-            maxHeight: '400px',
-            overflow: 'hidden',
-            position: 'relative',
-            verticalAlign: 'top',
-            width: '100%',
-          }}
-        >
-          <Chart
-            chart={this.props.barChart}
-            chartType='bar'
-            colorScaleScheme='schemeAccent'
-            colorScaleType='categorical'
-            containerHeight={this.state.containerHeight}
-            containerWidth={this.state.containerWidth}
-            datumLabels={[ 'lastName', 'total' ]}
-            id='bar-chart'
-            margins={this.props.barChart.margins}
-            preserveAspectRatio='xMinYMin meet'
-            xAxis={true}
-            xAxisLabel='person and total'
-            xScale={true}
-            yAxis={true}
-            yAxisLabel='total'
-            yScale={true}
-            yValue='total'
-          />
-        </section>
-        <section
-          className='chart-container'
-          style={{
-            display: 'block',
-            maxHeight: '400px',
-            overflow: 'hidden',
-            position: 'relative',
-            verticalAlign: 'top',
-            width: '100%',
-          }}
-        >
-          <Chart
-            chart={this.props.pieChart}
-            chartType='pie'
-            containerHeight={this.state.containerHeight}
-            containerWidth={this.state.containerWidth}
-            datumLabels={[ 'lastName', 'total' ]}
-            id='pie-chart'
-            margins={this.props.margins}
-            preserveAspectRatio='xMinYMin meet'
-            xAxis={false}
-            xScale={false}
-            yAxis={false}
-            yScale={false}
-            yValue='total'
-          />
-        </section>
       </article>
     );
   }
@@ -203,11 +237,11 @@ const mapStateToProps = (state) => {
   const margins = getMargins();
 
   return {
-    barChart: getBarChart(state),
-    lineChart: getLineChart(state),
     margins: margins(state),
-    pieChart: getPieChart(state),
+    openIssues: getOpenIssues(state),
+    payingCustomers: getPayingCustomers(state),
     scatterPlotChart: getScatterPlot(state),
+    totalEmployees: getTotalEmployees(state),
   };
 };
 

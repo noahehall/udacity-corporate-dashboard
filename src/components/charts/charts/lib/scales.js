@@ -204,19 +204,35 @@ export const getXScale = ({
 };
 
 // Retrieve color scale
-export const colorScale = ({ colorScaleScheme, colorScaleType = 'categorical' }) => {
+export const colorScale = ({
+  colorScaleScheme = 'schemeCategory20',
+  colorScaleType = 'basic'
+}) => {
   switch (colorScaleType.toLowerCase()) {
-    case 'categorical': {
+    // update this:
+    // https://github.com/d3/d3-scale/blob/master/README.md#category-scales
+    case 'basic': {
+      return d3[colorScaleScheme]
+        ? d3.scaleOrdinal(d3[colorScaleScheme])
+        : d3.scaleOrdinal(d3.schemeCategory20);
+    }
+    // update this:
+    // https://github.com/d3/d3-scale-chromatic#categorical
+    // https://github.com/d3/d3-scale-chromatic#diverging
+    case 'chromatic': {
       return colorScaleScheme && d3chromatic[colorScaleScheme]
         ? d3.scaleOrdinal(d3chromatic[colorScaleScheme])
-        : null;
+        : d3.scaleOrdinal(d3chromatic.schemeAccent);
     }
+    // update this
+    // https://github.com/d3/d3/blob/master/API.md#sequential-scales
     case 'sequential': {
       return d3.scaleSequential(d3.interpolatePiYG);
     }
+    // update this: https://github.com/d3/d3/blob/master/API.md#sequential-scales
     case 'random':
     default: {
-      return d3.interpolateCool(Math.random());
+      return d3.interpolateCool;
     }
   }
 };

@@ -1,12 +1,12 @@
 import { Path } from '../svg/path.js';
 import * as arcs from '../lib/arcs.js';
 import * as label from '../lib/labels.js';
-import * as scales from '../lib/scales.js';
 import React from 'react';
 
 export const PieSlices = ({
   chartHeight,
   chartWidth,
+  colorScale,
   data,
   fontSize = '10px',
   textAnchor = 'middle',
@@ -38,7 +38,7 @@ export const PieSlices = ({
       >
         <Path
           d={thisArc()}
-          fill={scales.colorScale({ colorScaleType: 'random' })}
+          fill={colorScale(idx)}
           id={`arc-${idx}`}
         />
         {

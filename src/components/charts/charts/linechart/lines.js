@@ -28,7 +28,6 @@ export const Lines = ({
         yValue,
       });
       const pathArray = [];
-      appFuncs.console('dir')(colorScale);
       for (const group in data)
         // generate path for each lineGroup
         pathArray.push(
