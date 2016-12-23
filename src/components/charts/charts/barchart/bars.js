@@ -7,11 +7,22 @@ export const Bars = ({
   colorScale,
   data,
   labels,
-  yValue = 'total',
+  yValue = '',
   xScale,
   yScale,
 }) => {
-  if (!yScale || !xScale || !chartHeight) return null;
+  if (!yScale || !xScale || !yValue) {
+    appFuncs.logError({
+      arr: [
+        xScale,
+        yScale,
+        yValue,
+      ],
+      msg: 'yScale, yValue and xScale must be valid variables in Bars(), returning null',
+    });
+
+    return null;
+  }
   const rects = [];
   data.forEach((d, i) => {
     // this is required for tick marks

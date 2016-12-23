@@ -18,14 +18,7 @@ export const format = ({
     case 'scatterplot': // eslint-disable-line
     case 'bar':
     case 'pie':
-    default: {
-      appFuncs.logError({
-        arr: [ chartType, data ],
-        msg: `formatting data not available for chart type ${chartType} in data.format(), returning data`,
-      });
-
-      return data;
-    }
+    default: return data;
   }
   // group all values by groupby
   const lineValues = appFuncs._.groupBy(data, (d) => d[chartDataGroupBy]);
