@@ -4,10 +4,11 @@ import { Path } from '../svg/path.js';
 import React from 'react';
 
 export const Lines = ({
-  // chartHeight = 200,
   // chartDataGroupBy = '',
-  chartType = 'line',
+  // chartHeight = 200,
   // chartWidth = 200,
+  chartType = 'line',
+  colorScale,
   data,
   lineCurve = 'curveBasis',
   xScale,
@@ -27,7 +28,7 @@ export const Lines = ({
         yValue,
       });
       const pathArray = [];
-
+      appFuncs.console('dir')(colorScale);
       for (const group in data)
         // generate path for each lineGroup
         pathArray.push(
@@ -37,6 +38,7 @@ export const Lines = ({
             fill='none'
             id={data[group].id}
             key={data[group].id}
+            stroke={colorScale(data[group].id)}
           />
         );
 
