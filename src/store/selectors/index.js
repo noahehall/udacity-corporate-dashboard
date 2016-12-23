@@ -7,9 +7,9 @@ export const getBarChart = createSelector(
   (thisData) => thisData.barChart
 );
 
-export const getPieChart = createSelector(
+export const getTotalEmployees = createSelector(
   [data],
-  (thisData) => thisData.pieChart
+  (thisData) => thisData.totalEmployees
 );
 
 export const getScatterPlot = createSelector(

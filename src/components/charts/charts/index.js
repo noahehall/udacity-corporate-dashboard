@@ -22,6 +22,7 @@ export const getVisualContainerTransform = ({
 export const Chart = ({
   chart = { data: {}, margins: {}},
   chartDataGroupBy = '',
+  // bar|scatterplot|pie|line
   chartType = '',
   colorScaleScheme = 'schemeAccent',
   colorScaleType = 'categorical',

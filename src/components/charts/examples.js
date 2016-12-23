@@ -3,7 +3,7 @@ import {
   getBarChart,
   getLineChart,
   getMargins,
-  getPieChart,
+  getTotalEmployees,
   getScatterPlot,
 } from 'store/selectors';
 import Chart from './charts';
@@ -21,8 +21,8 @@ export class Examples extends React.Component {
     id: React.PropTypes.string,
     lineChart: React.PropTypes.object,
     margins: React.PropTypes.object,
-    pieChart: React.PropTypes.object,
     scatterPlotChart: React.PropTypes.object,
+    totalEmployees: React.PropTypes.object,
   }
 
   constructor (props) {
@@ -77,11 +77,48 @@ export class Examples extends React.Component {
           }}
         >
           <Chart
+            // https://github.com/d3/d3-time-format/blob/master/README.md#locale_format
+            chart={this.props.totalEmployees}
+            chartDataGroupBy='' // eslintignore only used if xScaleTime = true
+            chartType='bar' // eslintignore requires x and y axis to have integer values
+            colorScaleScheme='schemeCategory20'
+            colorScaleType='basic'
+            containerHeight={this.state.containerHeight}
+            containerWidth={this.state.containerWidth}
+            datumLabels={['location']}
+            id='employees-at-each-location'
+            margins={this.props.totalEmployees.margins}
+            preserveAspectRatio='xMinYMin meet'
+            r={3.5}
+            xAxis={true}
+            xAxisLabel='Employees at Each Location'
+            xScale={true}
+            xScaleTime={false}
+            xScaleTimeFormat='' // eslintlignore must match the format of your dates
+            xValue='location'
+            yAxis={true}
+            yAxisLabel='Total Employees'
+            yScale={true}
+            yValue='totalEmployees' // eslintignore used for pie chart as well
+          />
+        </section>
+        <section
+          className='chart-container'
+          style={{
+            display: 'block',
+            maxHeight: '400px',
+            overflow: 'hidden',
+            position: 'relative',
+            verticalAlign: 'top',
+            width: '100%',
+          }}
+        >
+          <Chart
             chart={this.props.lineChart}
             chartDataGroupBy='artist' // eslintignore only used if xScaleTime = true
             chartType='line'
             colorScaleScheme='schemeAccent'
-            colorScaleType='categorical'
+            colorScaleType='chromatic'
             containerHeight={this.state.containerHeight}
             containerWidth={this.state.containerWidth}
             datumLabels={[ 'artist', 'downloads' ]}
@@ -116,7 +153,7 @@ export class Examples extends React.Component {
             chart={this.props.scatterPlotChart}
             chartType='scatterplot'
             colorScaleScheme='schemeAccent'
-            colorScaleType='categorical'
+            colorScaleType='chromatic'
             containerHeight={this.state.containerHeight}
             containerWidth={this.state.containerWidth}
             datumLabels={[ 'gender', 'age' ]}
@@ -150,7 +187,7 @@ export class Examples extends React.Component {
             chart={this.props.barChart}
             chartType='bar'
             colorScaleScheme='schemeAccent'
-            colorScaleType='categorical'
+            colorScaleType='chromatic'
             containerHeight={this.state.containerHeight}
             containerWidth={this.state.containerWidth}
             datumLabels={[ 'lastName', 'total' ]}
@@ -163,33 +200,6 @@ export class Examples extends React.Component {
             yAxis={true}
             yAxisLabel='total'
             yScale={true}
-            yValue='total'
-          />
-        </section>
-        <section
-          className='chart-container'
-          style={{
-            display: 'block',
-            maxHeight: '400px',
-            overflow: 'hidden',
-            position: 'relative',
-            verticalAlign: 'top',
-            width: '100%',
-          }}
-        >
-          <Chart
-            chart={this.props.pieChart}
-            chartType='pie'
-            containerHeight={this.state.containerHeight}
-            containerWidth={this.state.containerWidth}
-            datumLabels={[ 'lastName', 'total' ]}
-            id='pie-chart'
-            margins={this.props.margins}
-            preserveAspectRatio='xMinYMin meet'
-            xAxis={false}
-            xScale={false}
-            yAxis={false}
-            yScale={false}
             yValue='total'
           />
         </section>
@@ -206,8 +216,8 @@ const mapStateToProps = (state) => {
     barChart: getBarChart(state),
     lineChart: getLineChart(state),
     margins: margins(state),
-    pieChart: getPieChart(state),
     scatterPlotChart: getScatterPlot(state),
+    totalEmployees: getTotalEmployees(state),
   };
 };
 
