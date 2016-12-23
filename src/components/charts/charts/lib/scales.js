@@ -60,7 +60,7 @@ export const getYScale = ({
   // chartHeight = 200,
   chartDataGroupBy = '',
   chartType = '',
-  data = {},
+  data,
   // chartWidth = 200,
   margins = {},
   svgHeight = 200,
@@ -107,7 +107,7 @@ export const getYScale = ({
         appFuncs.logError({
           arr: [ thisData, yValue ],
           err,
-          msg: 'error creating dataMinNumber for bar chrt chart in scales.getYScale()',
+          msg: 'error creating dataManNumber for bar chrt chart in scales.getYScale()',
         });
       }
     }
@@ -202,16 +202,23 @@ export const xScale = ({
  * retrieve xscale
  */
 export const getXScale = ({
-  chartDataGroupBy,
-  chartType = 'bar',
+  chartDataGroupBy = '',
+  chartType = '',
   data,
   labels,
-  margins,
-  svgWidth,
+  margins = {},
+  svgWidth = 200,
   xValue,
   xScaleTime,
 }) => { // eslint-disable-line consistent-return
-  if (appFuncs._.isEmpty(data)) return null;
+  if (appFuncs._.isEmpty(data)) {
+    appFuncs.logError({
+      arr: [ chartType, data ],
+      msg: `data must be a valid variable in scales.getXScale(), returning null`
+    });
+
+    return null;
+  }
   const chartWidth = svgWidth - (margins.left + margins.right);
 
   let
@@ -231,11 +238,22 @@ export const getXScale = ({
     case 'scatterplot': { // eslintignore both min and max
       try {
         dataMaxNumber = appFuncs._.maxBy(thisData, (o) => o[xValue])[xValue];
+      } catch (err) {
+        appFuncs.logError({
+          arr: [ thisData, xValue ],
+          err,
+          msg: 'error creating dataMaxNumber for scatterplot chart in scales.getXScale()',
+        });
+      }
+
+      try {
         dataMinNumber = appFuncs._.minBy(thisData, (o) => o[xValue])[xValue];
       } catch (err) {
-        appFuncs.console('error')(err);
-
-        return null;
+        appFuncs.logError({
+          arr: [ thisData, xValue ],
+          err,
+          msg: 'error creating dataMixNumber for scatterplot chart in scales.getXScale()',
+        });
       }
 
       break;
@@ -268,7 +286,9 @@ export const colorScale = ({
       if (d3[colorScaleScheme])
         return d3.scaleOrdinal(d3[colorScaleScheme]);
 
-      appFuncs.logError({ msg: `Scheme ${colorScaleScheme} does not exist for Scale type ${colorScaleType}, returning default schemeCategory20`});
+      appFuncs.logError({
+        msg: `Scheme ${colorScaleScheme} does not exist for Scale type ${colorScaleType}, returning default schemeCategory20`
+      });
 
       return d3.scaleOrdinal(d3.schemeCategory20);
     }
@@ -279,7 +299,9 @@ export const colorScale = ({
       if (colorScaleScheme && d3chromatic[colorScaleScheme])
         return d3.scaleOrdinal(d3chromatic[colorScaleScheme]);
 
-      appFuncs.logError({ msg: `Scheme ${colorScaleScheme} does not exist for Scale type ${colorScaleType}, returning ${schemeAccent}`});
+      appFuncs.logError({
+        msg: `Scheme ${colorScaleScheme} does not exist for Scale type ${colorScaleType}, returning ${schemeAccent}`
+      });
 
       return d3.scaleOrdinal(d3chromatic.schemeAccent);
     }
@@ -291,7 +313,9 @@ export const colorScale = ({
     // update this: https://github.com/d3/d3/blob/master/API.md#sequential-scales
     case 'random':
     default: {
-      appFuncs.logError({ msg: `Scheme ${colorScaleScheme} does not exist for Scale type ${colorScaleType}, returning ${interpolateCool}`});
+      appFuncs.logError({
+        msg: `Scheme ${colorScaleScheme} does not exist for Scale type ${colorScaleType}, returning ${interpolateCool}`
+      });
 
       return d3.interpolateCool;
     }
