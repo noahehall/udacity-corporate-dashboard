@@ -123,13 +123,29 @@ export const getYAxisLabel = ({
   x = 5,
   y = -5,
   yAxisLabel = '',
-}) =>
-  <Text
+}) => {
+  if (!yAxisLabel) {
+    appFuncs.logError({
+      data: [
+        transform,
+        x,
+        y,
+        yAxisLabel,
+      ],
+      loc: __filename,
+      msg: 'yAxisLabel must be a valid variable in axes.getYAxisLabel(), returning empty string',
+    });
+
+    return '';
+  }
+
+  return <Text
     text={yAxisLabel}
     transform={transform}
     x={x}
     y={y}
   />;
+};
 
 getYAxisLabel.propTypes = {
   transform: React.PropTypes.string,
