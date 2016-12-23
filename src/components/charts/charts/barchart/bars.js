@@ -13,7 +13,7 @@ export const Bars = ({
 }) => {
   if (!yScale || !xScale || !yValue) {
     appFuncs.logError({
-      arr: [
+      data: [
         xScale,
         yScale,
         yValue,

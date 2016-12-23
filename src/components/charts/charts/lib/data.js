@@ -25,7 +25,7 @@ export const format = ({
 
   if (appFuncs._.isEmpty(lineValues)) {
     appFuncs.logError({
-      arr: [ data, lineValues ],
+      data: [ data, lineValues ],
       loc: __filename,
       msg: `could not create groups for data on key ${chartDataGroupBy}, returning data`,
     });

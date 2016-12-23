@@ -9,16 +9,31 @@ import React from 'react';
 export const getYAxis = ({
   id = '',
   thisYScale = null,
-}) => (
-  id && thisYScale && typeof document !== 'undefined'
-    ? d3 // eslintignore let d3 handle the axis instead of building ourselves
-      .select(document.getElementById(`${id}`))
-      .select('.y.axis')
-      .call(d3.axisLeft(thisYScale))
-      .selectAll("text")
-      .classed('axies text', true)
-    : null
-);
+}) => {
+  if (!id || !thisYScale) {
+    appFuncs.logError({
+      data: [
+        id,
+        thisYScale,
+        typeof document,
+      ],
+      loc: __filename,
+      msg: 'id and thisYScale must be valid variables in axes.getYAxis(), returning null',
+    });
+
+    return null;
+  }
+
+  // dont create axis when rendering on server
+  if (typeof document === 'undefined') return null;
+
+  return d3 // eslintignore let d3 handle the axis instead of building ourselves
+    .select(document.getElementById(`${id}`))
+    .select('.y.axis')
+    .call(d3.axisLeft(thisYScale))
+    .selectAll("text")
+    .classed('axies text', true);
+};
 
 /*
  * Create/Update X Axis and insert it in DOM
@@ -30,20 +45,35 @@ export const getXAxis = ({
   textAnchor = 'end',
   thisXScale = null,
   transform = 'rotate(-65)',
-}) => (
-  id && thisXScale && typeof document !== 'undefined'
-    ? d3 // eslintignore let d3 handle the axis instead of building ourselves
-      .select(document.getElementById(`${id}`))
-      .select('.x.axis')
-      .call(d3.axisBottom(thisXScale))
-      .selectAll('g.tick text')
-      .classed('axes text', true)
-      .attr('dx', dx)
-      .attr('dy', dy)
-      .attr('transform', transform)
-      .style('text-anchor', textAnchor)
-    : null
-);
+}) => {
+  if (!id || !thisXScale) {
+    appFuncs.logError({
+      data: [
+        id,
+        thisXScale,
+        typeof document,
+      ],
+      loc: __filename,
+      msg: 'id and thisXScale must be valid variables in axes.getXAxis(), returning null',
+    });
+
+    return null;
+  }
+
+  // dont create axis when rendering on server
+  if (typeof document === 'undefined') return null;
+
+  return d3 // eslintignore let d3 handle the axis instead of building ourselves
+    .select(document.getElementById(`${id}`))
+    .select('.x.axis')
+    .call(d3.axisBottom(thisXScale))
+    .selectAll('g.tick text')
+    .classed('axes text', true)
+    .attr('dx', dx)
+    .attr('dy', dy)
+    .attr('transform', transform)
+    .style('text-anchor', textAnchor);
+};
 
 /**
  * Positions label on x Axis
@@ -56,13 +86,24 @@ export const getXAxisLabel = ({
   x = 5,
   xAxisLabel = '',
   y = -5,
-}) =>
-  <Text
+}) => {
+  if (!xAxisLabel) {
+    appFuncs.logError({
+      data: xAxisLabel,
+      loc: __filename,
+      msg: 'id and thisYScale must be valid variables in axes.getYAxis(), returning null',
+    });
+
+    return null;
+  }
+
+  return <Text
     text={xAxisLabel}
     transform={transform}
     x={x}
     y={y}
   />;
+};
 
 getXAxisLabel.propTypes = {
   transform: React.PropTypes.string,

@@ -8,7 +8,7 @@ export const generateLabelArc = ({
 }) => {
   if (isNaN(endAngle) || isNaN(startAngle))
     appFuncs.logError({
-      arr: [
+      data: [
         endAngle,
         startAngle,
       ],
@@ -35,7 +35,7 @@ export const generateArcPath = ({
 }) => {
   if (isNaN(startAngle) || isNaN(endAngle))
     appFuncs.logError({
-      arr: [
+      data: [
         endAngle,
         startAngle,
       ],
@@ -66,7 +66,7 @@ export const generateArcs = ({
 }) => {
   if (appFuncs._.isEmpty(data) || !yValue)
     appFuncs.logError({
-      arr: [
+      data: [
         data,
         yValue,
       ],
