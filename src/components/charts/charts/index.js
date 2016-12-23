@@ -23,6 +23,7 @@ export const Chart = ({
   chart = { data: {}, margins: {}},
   chartDataGroupBy = '',
   // bar|scatterplot|pie|line
+  // scatterplot: requires x and y values to be integers
   chartType = '',
   colorScaleScheme = 'schemeAccent',
   colorScaleType = 'categorical',

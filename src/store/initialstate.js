@@ -2,6 +2,7 @@
 import scatterPlotData from './fakedata/scatterplot.json';
 import lineChartData from './fakedata/linechart.json';
 import employeesAtLocations from './fakedata/employeesatlocations.json';
+import openIssues from './fakedata/openissues.json';
 
 export default {
   data: {
@@ -74,6 +75,15 @@ export default {
         bottom: 60,
         left: 60,
         right: 60,
+        top: 20,
+      },
+    },
+    openIssues: {
+      data: openIssues,
+      margins: {
+        bottom: 20,
+        left: 20,
+        right: 20,
         top: 20,
       },
     },

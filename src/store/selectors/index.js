@@ -7,6 +7,11 @@ export const getBarChart = createSelector(
   (thisData) => thisData.barChart
 );
 
+export const getOpenIssues = createSelector(
+  [data],
+  (thisData) => thisData.openIssues
+);
+
 export const getTotalEmployees = createSelector(
   [data],
   (thisData) => thisData.totalEmployees
