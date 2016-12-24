@@ -4,15 +4,28 @@ import * as label from '../lib/labels.js';
 import React from 'react';
 
 export const PieSlices = ({
-  chartHeight,
-  chartWidth,
+  chartHeight = 200,
+  chartWidth = 200,
   colorScale,
   data,
-  fontSize = '10px',
-  textAnchor = 'middle',
-  labels,
-  yValue = 'total',
+  labels = [],
+  yValue = '',
 }) => {
+  if (appFuncs._.isEmpty(data) || !yValue || !labels.length || !colorScale) {
+    appFuncs.logError({
+      data: [
+        colorScale,
+        data,
+        labels,
+        yValue,
+      ],
+      loc: __filename,
+      msg: 'colorScale, labels, data and yValue must be valid variables in slices.PieSlices(), returning null',
+    });
+
+    return null;
+  }
+
   const arcData = arcs.generateArcs({
     data,
     sort: null,
@@ -31,6 +44,7 @@ export const PieSlices = ({
 
     const labelText = label.getLabelText({ chartType: 'simple', d: arc.data, labels });
 
+    appFuncs.console()(labelText);
     arcArray.push(
       <g
         className='pie-slice'
@@ -47,10 +61,8 @@ export const PieSlices = ({
             chartHeight,
             chartType: 'pie',
             chartWidth,
-            fontSize,
             idx,
             labels,
-            textAnchor,
           })
         }
       </g>

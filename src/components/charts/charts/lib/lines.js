@@ -25,18 +25,10 @@ export const generateLine = ({
 
   let thisCurve;
 
-  if (!lineCurve || !d3[lineCurve]) {
-    appFuncs.logError({
-      data: [
-        lineCurve,
-        d3[lineCurve],
-      ],
-      loc: __filename,
-      msg: 'lineCurve must be valid variable in lines.generateLine(), returning defaultLine curveBasis instead',
-    });
-
+  if (!lineCurve || !d3[lineCurve])
     thisCurve = d3.curveBasis;
-  } else thisCurve = d3[lineCurve];
+  else
+    thisCurve = d3[lineCurve];
 
   return d3
     .line()

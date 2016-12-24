@@ -1,6 +1,6 @@
 import React from 'react';
 import * as arcs from './arcs.js';
-import { Text } from '../svg/text.js';
+import Text from '../svg/text.js';
 
 export const getLabelText = ({
   arc = {},
@@ -17,10 +17,10 @@ export const getLabelText = ({
         labels,
       ],
       loc: __filename,
-      msg: 'labels, chartType, and arc must be valid variables in labels.getLabelText(), returning null',
+      msg: 'labels, chartType, and arc must be valid variables in labels.getLabelText(), returning empty string',
     });
 
-    return null;
+    return '';
   }
   switch (chartType.toLowerCase()) {
     case 'pie': {
@@ -32,10 +32,10 @@ export const getLabelText = ({
             labels,
           ],
           loc: __filename,
-          msg: 'arc.data must be a valid variable in labels.getLabelText(), returning null',
+          msg: 'arc.data must be a valid variable in labels.getLabelText(), returning empty string',
         });
 
-        return null;
+        return '';
       }
 
       const label = [];
@@ -78,14 +78,12 @@ export const getLabelText = ({
     }
   }
 };
-
 getLabelText.propTypes = {
   arc: React.PropTypes.object,
   chartType: React.PropTypes.string,
   d: React.PropTypes.object,
   labels: React.PropTypes.array,
 };
-
 
 export const getPieLabels = ({ // eslint-disable-line
   arc = {},
@@ -94,11 +92,11 @@ export const getPieLabels = ({ // eslint-disable-line
   idx = 0,
   labels = [],
 }) => {
-  if (appFuncs._.isEmpty(arc)) {
+  if (appFuncs._.isEmpty(arc) || !labels.length) {
     appFuncs.logError({
       data: arc,
       loc: __filename,
-      msg: 'arc must be a valid variable in labels.getPieLabels(), returning null',
+      msg: 'arc and labels must be a valid variable in labels.getPieLabels(), returning null',
     });
 
     return null;
@@ -117,21 +115,37 @@ export const getPieLabels = ({ // eslint-disable-line
     [ x, y ] = thisArc.centroid(arc),
     dx = (arc.endAngle + arc.startAngle)/2 > Math.PI
       ? -15
-      : 15;
+      : 15,
+    // wrap the text in svg tspan elements
+    text = getLabelText({ arc, chartType: 'pie', labels });
+
+  if (!text) {
+    appFuncs.logError({
+      data: [
+        'chartType = pie',
+        arc,
+        labels,
+      ],
+      msg: 'text needs to be a valid variable, check labels.getLabelText method, returning empty string',
+    });
+
+    return '';
+  }
 
   return (
     <Text
+      chartType='pie'
+      className=''
       dx={dx}
       dy={0}
+      text={text}
+      transform='rotate(0)'
       x={x/2}
       xlinkHref={`#arc-${idx}`}
       y={y/2}
-    >
-      {getLabelText({ arc, chartType: 'pie', labels })}
-    </Text>
+    />
   );
 };
-
 getPieLabels.propTypes = {
   arc: React.PropTypes.object,
   chartHeight: React.PropTypes.number,

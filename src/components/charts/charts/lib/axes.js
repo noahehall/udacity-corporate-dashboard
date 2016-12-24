@@ -1,5 +1,5 @@
 // import * as label from './labels.js';
-import { Text } from '../svg/text.js';
+import Text from '../svg/text.js';
 import * as d3 from 'd3';
 import React from 'react';
 
@@ -98,6 +98,7 @@ export const getXAxisLabel = ({
   }
 
   return <Text
+    chartType='axes'
     text={xAxisLabel}
     transform={transform}
     x={x}
@@ -140,6 +141,7 @@ export const getYAxisLabel = ({
   }
 
   return <Text
+    chartType='axes'
     text={yAxisLabel}
     transform={transform}
     x={x}
