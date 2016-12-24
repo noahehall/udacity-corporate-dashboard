@@ -54,16 +54,12 @@ export class Examples extends React.Component {
     try {
       containerHeight = this.container.offsetHeight;
     } catch (err) {
-      appFuncs.console('error')(err);
-      appFuncs.console('dir')(this.container);
       containerHeight = 200;
     }
 
     try {
       containerWidth = this.container.offsetWidth;
     } catch (err) {
-      appFuncs.console('error')(err);
-      appFuncs.console('dir')(this.container);
       containerWidth = 200;
     }
 
@@ -213,7 +209,7 @@ export class Examples extends React.Component {
             colorScaleType='basic'
             containerHeight={this.state.containerHeight}
             containerWidth={this.state.containerWidth}
-            datumLabels={['total']}
+            datumLabels={['date']}
             id='new-issues'
             margins={this.props.newIssues.margins}
             preserveAspectRatio='xMinYMin meet'
@@ -221,7 +217,7 @@ export class Examples extends React.Component {
             xAxis={true}
             xAxisLabel='Date'
             xScale={true}
-            xScaleTime={true}
+            xScaleTime={false}
             xScaleTimeFormat='%Y/%m/%d'
             xValue='date'
             yAxis={true}

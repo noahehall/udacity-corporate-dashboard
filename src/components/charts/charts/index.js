@@ -46,9 +46,9 @@ export const Chart = ({
 }) => {
   if (appFuncs._.isEmpty(chart.data)) {
     appFuncs.logError({
+      data: chart,
       loc: __filename,
       msg: 'You need data to create a chart, return null',
-      obj: [chart],
     });
 
     return null;
@@ -70,6 +70,7 @@ export const Chart = ({
       break;
     default : {
       appFuncs.logError({
+        data: [ chartType, chart ],
         loc: __filename,
         msg: `did not find chart type ${chartType}, returning null`,
       });
@@ -146,8 +147,6 @@ export const Chart = ({
   return (
     <SVG
       id={id}
-      labels={datumLabels}
-      margins={margins}
       preserveAspectRatio={preserveAspectRatio}
       svgHeight={containerHeight}
       svgWidth={containerWidth}

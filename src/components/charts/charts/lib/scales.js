@@ -15,7 +15,7 @@ export const yScale = ({
 }) => {
   if (!chartType) {
     appFuncs.logError({
-      arr: [ chartHeight, chartType, dataMinNumber, dataMaxNumber ],
+      data: [ chartHeight, chartType, dataMinNumber, dataMaxNumber ],
       loc: __filename,
       msg: `chart type cannot be undefined for scales.yScale(), returning null`,
     });
@@ -30,7 +30,7 @@ export const yScale = ({
     default: {
       if (chartHeight < 0 || dataMaxNumber < 0) {
         appFuncs.logError({
-          arr: [ chartHeight, chartType, dataMaxNumber, dataMinNumber ],
+          data: [ chartHeight, chartType, dataMaxNumber, dataMinNumber ],
           loc: __filename,
           msg: 'all values should be defined and above 0 for scales.yScale(), returning null',
         });
@@ -70,7 +70,7 @@ export const getYScale = ({
 }) => {
   if (!yValue || !chartType || appFuncs._.isEmpty(data)) {
     appFuncs.logError({
-      arr: [ chartType, data, yValue ],
+      data: [ chartType, data, yValue ],
 
       msg: 'yValue, chartType and data need to be valid variables for scales.getYScale(), returning null',
     });
@@ -96,7 +96,7 @@ export const getYScale = ({
         dataMinNumber = appFuncs._.minBy(thisData, (o) => o[yValue])[yValue];
       } catch (err) {
         appFuncs.logError({
-          arr: [
+          data: [
             thisData,
             yValue,
           ],
@@ -112,7 +112,7 @@ export const getYScale = ({
         dataMaxNumber = appFuncs._.maxBy(thisData, (o) => o[yValue])[yValue];
       } catch (err) {
         appFuncs.logError({
-          arr: [
+          data: [
             thisData,
             yValue,
           ],
@@ -190,8 +190,8 @@ export const xScale = ({
     case 'bar': {
       if (!dataLabelsArray.length)
         appFuncs.logError({
-          arr: [ chartType, dataLabaelsArray ],
-
+          data: [ chartType, dataLabaelsArray ],
+          loc: __filename,
           msg: `dataLabaelsArray cannot be empty in scales.xScale(), attempting to create and return xScale anyway`,
         });
 
@@ -227,7 +227,7 @@ export const getXScale = ({
 }) => { // eslint-disable-line consistent-return
   if (appFuncs._.isEmpty(data)) {
     appFuncs.logError({
-      arr: [
+      data: [
         chartType,
         data,
       ],
@@ -258,7 +258,7 @@ export const getXScale = ({
         dataMaxNumber = appFuncs._.maxBy(thisData, (o) => o[xValue])[xValue];
       } catch (err) {
         appFuncs.logError({
-          arr: [
+          data: [
             thisData,
             xValue,
           ],
@@ -272,7 +272,7 @@ export const getXScale = ({
         dataMinNumber = appFuncs._.minBy(thisData, (o) => o[xValue])[xValue];
       } catch (err) {
         appFuncs.logError({
-          arr: [
+          data: [
             thisData,
             xValue,
           ],
@@ -286,7 +286,7 @@ export const getXScale = ({
     }
     case 'bar': // eslint-disable-line
     default: {
-      dataLabelsArray = thisData.map((d) => label.getLabels({ d, labels }));
+      dataLabelsArray = thisData.map((d) => label.getLabels({ chartType, d, labels }));
     }
   }
 
@@ -313,6 +313,10 @@ export const colorScale = ({
         return d3.scaleOrdinal(d3[colorScaleScheme]);
 
       appFuncs.logError({
+        data: [
+          colorScaleScheme,
+          colorScaleType,
+        ],
         loc: __filename,
         msg: `Scheme ${colorScaleScheme} does not exist for Scale type ${colorScaleType}, returning default schemeCategory20`
       });
@@ -327,6 +331,10 @@ export const colorScale = ({
         return d3.scaleOrdinal(d3chromatic[colorScaleScheme]);
 
       appFuncs.logError({
+        data: [
+          colorScaleScheme,
+          colorScaleType,
+        ],
         loc: __filename,
         msg: `Scheme ${colorScaleScheme} does not exist for Scale type ${colorScaleType}, returning ${schemeAccent}`
       });
@@ -342,6 +350,10 @@ export const colorScale = ({
     case 'random':
     default: {
       appFuncs.logError({
+        data: [
+          colorScaleScheme,
+          colorScaleType,
+        ],
         loc: __filename,
         msg: `Scheme ${colorScaleScheme} does not exist for Scale type ${colorScaleType}, returning ${interpolateCool}`
       });
