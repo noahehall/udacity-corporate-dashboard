@@ -54,16 +54,12 @@ export class Examples extends React.Component {
     try {
       containerHeight = this.container.offsetHeight;
     } catch (err) {
-      appFuncs.console('error')(err);
-      appFuncs.console('dir')(this.container);
       containerHeight = 200;
     }
 
     try {
       containerWidth = this.container.offsetWidth;
     } catch (err) {
-      appFuncs.console('error')(err);
-      appFuncs.console('dir')(this.container);
       containerWidth = 200;
     }
 

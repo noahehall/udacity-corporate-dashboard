@@ -44,7 +44,13 @@ export const PieSlices = ({
 
     const labelText = label.getLabelText({ chartType: 'simple', d: arc.data, labels });
 
-    appFuncs.console()(labelText);
+    if (!labelText.length)
+      appFuncs.logError({
+        data: labelText,
+        loc: __filename,
+        msg: 'labelText has 0 length in slices.PieSlices()',
+      });
+
     arcArray.push(
       <g
         className='pie-slice'
