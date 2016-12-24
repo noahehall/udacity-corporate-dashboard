@@ -11,7 +11,7 @@ export const Text = ({
   x = 0, // eslintignore relative to upper left
   y = 20, // eslintignore relative to upper left
 }) => {
-  if (!text || !chartType) {
+  if (!text.length || !chartType) {
     appFuncs.logError({
       data: [
         chartType,
@@ -52,7 +52,10 @@ Text.propTypes = {
   dx: React.PropTypes.number,
   dy: React.PropTypes.number,
   fill: React.PropTypes.string,
-  text: React.PropTypes.string,
+  text: React.PropTypes.oneOfType([
+    React.PropTypes.array,
+    React.PropTypes.string,
+  ]),
   transform: React.PropTypes.string,
   x: React.PropTypes.oneOfType([
     React.PropTypes.number,

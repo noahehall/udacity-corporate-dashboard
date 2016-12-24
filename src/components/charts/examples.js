@@ -209,7 +209,7 @@ export class Examples extends React.Component {
             colorScaleType='basic'
             containerHeight={this.state.containerHeight}
             containerWidth={this.state.containerWidth}
-            datumLabels={['total']}
+            datumLabels={['date']}
             id='new-issues'
             margins={this.props.newIssues.margins}
             preserveAspectRatio='xMinYMin meet'
@@ -217,7 +217,7 @@ export class Examples extends React.Component {
             xAxis={true}
             xAxisLabel='Date'
             xScale={true}
-            xScaleTime={true}
+            xScaleTime={false}
             xScaleTimeFormat='%Y/%m/%d'
             xValue='date'
             yAxis={true}

@@ -147,8 +147,6 @@ export const Chart = ({
   return (
     <SVG
       id={id}
-      labels={datumLabels}
-      margins={margins}
       preserveAspectRatio={preserveAspectRatio}
       svgHeight={containerHeight}
       svgWidth={containerWidth}

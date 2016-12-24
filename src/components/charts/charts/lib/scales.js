@@ -191,7 +191,7 @@ export const xScale = ({
       if (!dataLabelsArray.length)
         appFuncs.logError({
           data: [ chartType, dataLabaelsArray ],
-
+          loc: __filename,
           msg: `dataLabaelsArray cannot be empty in scales.xScale(), attempting to create and return xScale anyway`,
         });
 
