@@ -1,4 +1,9 @@
+import sorttable from './thirdparty/sorttable.js';
+import _ from 'lodash';
+
 const integrations = {
+  _,
+  sorttable,
   rollbar (type = 'reportMessage', env = 'client') {
     if (typeof XMLHttpRequest !== undefined) {
 
