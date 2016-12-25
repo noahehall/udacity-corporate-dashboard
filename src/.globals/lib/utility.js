@@ -1,8 +1,4 @@
-import _ from 'lodash';
-
 const utility = {
-  _, // oowee love lodash ;)
-
   /**
   * available console types, dependent on env
   * @see https://developer.mozilla.org/en-US/docs/Web/API/Console
