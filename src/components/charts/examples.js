@@ -4,6 +4,7 @@ import {
   getNewIssues,
   getOpenIssues,
   getPayingCustomers,
+  getTable,
   getTotalEmployees,
 } from 'store/selectors';
 import Chart from './charts';
@@ -22,12 +23,12 @@ export class Examples extends React.Component {
     newIssues: React.PropTypes.object,
     openIssues: React.PropTypes.object,
     payingCustomers: React.PropTypes.object,
+    table: React.PropTypes.object,
     totalEmployees: React.PropTypes.object,
   }
 
   constructor (props) {
     super(props);
-
     this.state = {
       containerHeight: 200,
       containerWidth: 200,
@@ -79,6 +80,42 @@ export class Examples extends React.Component {
           width: '100%',
         }}
       >
+        <section
+          className='chart-container'
+          style={{
+            display: 'block',
+            maxHeight: '400px',
+            overflow: 'hidden',
+            position: 'relative',
+            verticalAlign: 'top',
+            width: '100%',
+          }}
+        >
+          <Chart
+            chart={this.props.table}
+            chartDataGroupBy=''
+            chartType='table'
+            colorScaleScheme=''
+            colorScaleType=''
+            containerHeight={this.state.containerHeight}
+            containerWidth={this.state.containerWidth}
+            datumLabels={[]}
+            id='table'
+            margins={this.props.table.margins}
+            preserveAspectRatio=''
+            r=''
+            xAxis={false}
+            xAxisLabel=''
+            xScale={false}
+            xScaleTime={false}
+            xScaleTimeFormat=''
+            xValue=''
+            yAxis={false}
+            yAxisLabel=''
+            yScale={false}
+            yValue=''
+          />
+        </section>
         <section
           className='chart-container'
           ref={(container) => this.container = container}
@@ -240,6 +277,7 @@ const mapStateToProps = (state) => {
     newIssues: getNewIssues(state),
     openIssues: getOpenIssues(state),
     payingCustomers: getPayingCustomers(state),
+    table: getTable(state),
     totalEmployees: getTotalEmployees(state),
   };
 };
