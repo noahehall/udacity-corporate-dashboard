@@ -3,6 +3,7 @@ import employeesAtLocations from './fakedata/employeesatlocations.json';
 import openIssues from './fakedata/openissues.json';
 import payingCustomers from './fakedata/payingcustomers.json';
 import newIssues from './fakedata/newissues.json';
+import table from './fakedata/table.json';
 
 export default {
   data: {
@@ -31,6 +32,15 @@ export default {
         left: 60,
         right: 60,
         top: 20,
+      },
+    },
+    table: {
+      data: table,
+      margins: {
+        bottom: 10,
+        left: 10,
+        right: 10,
+        top: 10,
       },
     },
     totalEmployees: {

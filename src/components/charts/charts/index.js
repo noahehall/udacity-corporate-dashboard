@@ -7,6 +7,7 @@ import * as axes from './lib/axes.js';
 import * as dataFunctions from './lib/data.js';
 import * as scales from './lib/scales.js';
 import React from 'react';
+import { Table } from './table';
 
 export const getVisualContainerTransform = ({
   chartHeight,
@@ -67,6 +68,9 @@ export const Chart = ({
       break;
     case 'line':
       chartFunction = Lines;
+      break;
+    case 'table':
+      chartFunction = Table;
       break;
     default : {
       appFuncs.logError({
@@ -144,8 +148,27 @@ export const Chart = ({
   if (yAxis && thisYScale && hasDocument) axes.getYAxis({ id, thisYScale });
   if (xAxis && thisXScale && hasDocument) axes.getXAxis({ id, thisXScale });
 
-  return (
-    <SVG
+  const thisChart = chartFunction({
+    chartDataGroupBy,
+    chartHeight,
+    chartType,
+    chartWidth,
+    colorScale,
+    colorScaleScheme,
+    colorScaleType,
+    data,
+    labels: datumLabels,
+    xScale: thisXScale,
+    xScaleTime,
+    xScaleTimeFormat,
+    xValue,
+    yScale: thisYScale,
+    yValue,
+  });
+
+  return chartType === 'table'
+    ? thisChart
+    : <SVG
       id={id}
       preserveAspectRatio={preserveAspectRatio}
       svgHeight={containerHeight}
@@ -161,23 +184,7 @@ export const Chart = ({
           className={`${chartType.toLowerCase()}-visual-container`}
           transform={getVisualContainerTransform({ chartHeight, chartType, chartWidth })}
         >
-          {chartFunction({
-            chartDataGroupBy,
-            chartHeight,
-            chartType,
-            chartWidth,
-            colorScale,
-            colorScaleScheme,
-            colorScaleType,
-            data,
-            labels: datumLabels,
-            xScale: thisXScale,
-            xScaleTime,
-            xScaleTimeFormat,
-            xValue,
-            yScale: thisYScale,
-            yValue,
-          })}
+          {thisChart}
         </g>
       </g>
       { xAxis &&
@@ -205,8 +212,7 @@ export const Chart = ({
           position: 'absolute',
         }}
       />
-    </SVG>
-  );
+    </SVG>;
 };
 
 Chart.propTypes = {

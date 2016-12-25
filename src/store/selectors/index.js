@@ -22,6 +22,11 @@ export const getPayingCustomers = createSelector(
   (thisData) => thisData.payingCustomers
 );
 
+export const getTable = createSelector(
+  [data],
+  (thisData) => thisData.table
+);
+
 // https://github.com/reactjs/reselect#sharing-selectors-with-props-across-multiple-components
 export const getMargins = () =>
   createSelector(
