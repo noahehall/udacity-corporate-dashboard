@@ -36,6 +36,10 @@ export class Examples extends React.Component {
   }
 
   componentDidMount () {
+    // filter the table
+    appFuncs.filterTable.setFilterGrid('table');
+    appFuncs.sortTable.init();
+
     this.setSize();
     if (typeof window !== 'undefined') window.addEventListener(`resize`, this.setSize, false);
   }

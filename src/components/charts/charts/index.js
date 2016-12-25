@@ -157,6 +157,7 @@ export const Chart = ({
     colorScaleScheme,
     colorScaleType,
     data,
+    id,
     labels: datumLabels,
     xScale: thisXScale,
     xScaleTime,
