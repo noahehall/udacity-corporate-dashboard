@@ -16,7 +16,7 @@ export const Table = ({ className, data, id, filterable, sortable }) => {
         id={id}
       />
       <Tbody data={data} id={id} />
-      <tfoot><tr><td>Udacity Course</td></tr></tfoot>
+      <tfoot><tr><td /></tr></tfoot>
     </table>
   );
 };

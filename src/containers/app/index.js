@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import * as actionCreators from 'store/actions/index.js';
 import Helmet from 'react-helmet';
+import Idbstore from 'serviceworkers/idb/idb';
 import React from 'react';
 import styles from './index.css';
 
@@ -10,6 +11,14 @@ class App extends React.Component {
   static propTypes = {
     children: React.PropTypes.node,
     msg: React.PropTypes.string,
+  }
+
+  componentDidMount () {
+    if (Idbstore) {
+      const db = new Idbstore();
+      appFuncs.console()('Idbstore is true!');
+      appFuncs.console('dir')(db);
+    } else appFuncs.console()('Idb store is false :(');
   }
 
   /**
@@ -61,7 +70,13 @@ class App extends React.Component {
               <Link activeClassName='active' className='navlink' onlyActiveOnIndex={true} to={`/`} >Home</Link>
             </li>
             <li className='navitem'>
-              <Link activeClassName='active' className='navlink' to={`start`} >Start</Link>
+              <Link activeClassName='active' className='navlink' to={`geospatial`} >Geospatial</Link>
+            </li>
+            <li className='navitem'>
+              <Link activeClassName='active' className='navlink' to={`data`} >Data View</Link>
+            </li>
+            <li className='navitem'>
+              <Link activeClassName='active' className='navlink' to={`keymetrics`} >Key Metrics</Link>
             </li>
             <li className='navitem ra'>
               <section>{this.props.msg}</section>

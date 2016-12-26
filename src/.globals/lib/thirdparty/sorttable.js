@@ -27,7 +27,10 @@ const sorttable = {
     if (typeof window === 'undefined' || document === 'undefined') return;
 
     // quit if this function has already been called
-    if (sorttable.DATE_RE) return;
+    // breaks reactjs
+    if (sorttable.DATE_RE) {
+      // return;
+    };
     // kill the timer
     if (_timer) clearInterval(_timer);
 

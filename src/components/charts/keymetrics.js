@@ -4,8 +4,6 @@ import {
   getNewIssues,
   getOpenIssues,
   getPayingCustomers,
-  getTable,
-  getTotalEmployees,
 } from 'store/selectors';
 import Chart from './charts';
 import React from 'react';
@@ -13,7 +11,7 @@ import React from 'react';
 export class Examples extends React.Component {
   static get defaultProps () {
     return {
-      id: 'examples-of-charts',
+      id: 'examples-of-charts3',
     };
   }
 
@@ -23,8 +21,6 @@ export class Examples extends React.Component {
     newIssues: React.PropTypes.object,
     openIssues: React.PropTypes.object,
     payingCustomers: React.PropTypes.object,
-    table: React.PropTypes.object,
-    totalEmployees: React.PropTypes.object,
   }
 
   constructor (props) {
@@ -36,10 +32,6 @@ export class Examples extends React.Component {
   }
 
   componentDidMount () {
-    // filter the table
-    appFuncs.filterTable.setFilterGrid('table');
-    appFuncs.sortTable.init();
-
     this.setSize();
     if (typeof window !== 'undefined') window.addEventListener(`resize`, this.setSize, false);
   }
@@ -84,85 +76,10 @@ export class Examples extends React.Component {
           width: '100%',
         }}
       >
-        <section
-          className='chart-container'
-          style={{
-            display: 'block',
-            fontSize: '8px',
-            maxHeight: '400px',
-            overflow: 'scroll',
-            position: 'relative',
-            verticalAlign: 'top',
-            width: '100%',
-          }}
-        >
-          <Chart
-            chart={this.props.table}
-            chartDataGroupBy=''
-            chartType='table'
-            colorScaleScheme=''
-            colorScaleType=''
-            containerHeight={this.state.containerHeight}
-            containerWidth={this.state.containerWidth}
-            datumLabels={[]}
-            filterable={true}
-            id='table'
-            margins={this.props.table.margins}
-            preserveAspectRatio=''
-            r=''
-            sortable={true}
-            xAxis={false}
-            xAxisLabel=''
-            xScale={false}
-            xScaleTime={false}
-            xScaleTimeFormat=''
-            xValue=''
-            yAxis={false}
-            yAxisLabel=''
-            yScale={false}
-            yValue=''
-          />
-        </section>
+        <h4>number of open issues</h4>
         <section
           className='chart-container'
           ref={(container) => this.container = container}
-          style={{
-            display: 'block',
-            maxHeight: '400px',
-            overflow: 'hidden',
-            position: 'relative',
-            verticalAlign: 'top',
-            width: '100%',
-          }}
-        >
-          <Chart
-            // https://github.com/d3/d3-time-format/blob/master/README.md#locale_format
-            chart={this.props.totalEmployees}
-            chartDataGroupBy='' // eslintignore only used if xScaleTime = true
-            chartType='bar' // eslintignore requires x and y axis to have integer values
-            colorScaleScheme='schemeCategory20'
-            colorScaleType='basic'
-            containerHeight={this.state.containerHeight}
-            containerWidth={this.state.containerWidth}
-            datumLabels={['location']}
-            id='employees-at-each-location'
-            margins={this.props.totalEmployees.margins}
-            preserveAspectRatio='xMinYMin meet'
-            r={3.5}
-            xAxis={true}
-            xAxisLabel='Employees at Each Location'
-            xScale={true}
-            xScaleTime={false}
-            xScaleTimeFormat='' // eslintlignore must match the format of your dates
-            xValue='location'
-            yAxis={true}
-            yAxisLabel='Total Employees'
-            yScale={true}
-            yValue='totalEmployees' // eslintignore used for pie chart as well
-          />
-        </section>
-        <section
-          className='chart-container'
           style={{
             display: 'block',
             maxHeight: '400px',
@@ -198,6 +115,7 @@ export class Examples extends React.Component {
             yValue='total' // eslintignore used for pie chart slice size as well
           />
         </section>
+        <h4>number of paying customers over a period of time</h4>
         <section
           className='chart-container'
           style={{
@@ -234,6 +152,7 @@ export class Examples extends React.Component {
             yValue='totalPayingCustomers'
           />
         </section>
+        <h4>number of reported issues over a period of time</h4>
         <section
           className='chart-container'
           style={{
@@ -284,8 +203,6 @@ const mapStateToProps = (state) => {
     newIssues: getNewIssues(state),
     openIssues: getOpenIssues(state),
     payingCustomers: getPayingCustomers(state),
-    table: getTable(state),
-    totalEmployees: getTotalEmployees(state),
   };
 };
 
