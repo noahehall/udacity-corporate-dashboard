@@ -1,9 +1,11 @@
-import sorttable from './thirdparty/sorttable.js';
+import sortTable from './thirdparty/sorttable.js';
 import _ from 'lodash';
+import filterTable from './thirdparty/filtertable.js';
 
 const integrations = {
   _,
-  sorttable,
+  sortTable,
+  filterTable,
   rollbar (type = 'reportMessage', env = 'client') {
     if (typeof XMLHttpRequest !== undefined) {
 

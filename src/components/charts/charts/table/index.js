@@ -1,34 +1,32 @@
 import React from 'react';
+import Thead from './thead.js';
+import Tbody from './tbody.js';
 
-export const Table = () => (
-  <table className='sortable'>
-    <tbody>
-      <tr>
-        <th> heading 1</th>
-        <th> heading 2</th>
-      </tr>
-      <tr>
-        <td> cell 1 </td>
-        <td> cell 2 </td>
-      </tr>
-      <tr>
-        <td> cell 0 </td>
-        <td> cell 3 </td>
-      </tr>
-      <tr>
-        <td> cell 10 </td>
-        <td> cell 20 </td>
-      </tr>
-      <tr>
-        <td> cell 4 </td>
-        <td> cell 5 </td>
-      </tr>
-    </tbody>
-  </table>
-);
+export const Table = ({ className, data, id, filterable, sortable }) => {
+  let thisClassName = className
+    ? className
+    : '';
+  if (sortable) thisClassName += ' sortable';
+
+  return (
+    <table className={thisClassName} id={id}>
+      <Thead
+        data0={data[0]}
+        filterable={filterable}
+        id={id}
+      />
+      <Tbody data={data} id={id} />
+      <tfoot><tr><td>Udacity Course</td></tr></tfoot>
+    </table>
+  );
+};
 
 Table.propTypes = {
-  data: React.PropTypes.object,
+  className: React.PropTypes.string,
+  data: React.PropTypes.array,
+  filterable: React.PropTypes.bool,
+  id: React.PropTypes.string,
+  sortable: React.PropTypes.bool,
 };
 
 export default Table;

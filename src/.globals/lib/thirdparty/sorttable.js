@@ -54,42 +54,9 @@ const sorttable = {
       tfo,
       the,
       theadrow;
-    if (table.getElementsByTagName('thead').length === 0) {
-      // table doesn't have a tHead. Since it should have, create one and
-      // put the first table row in it.
-      the = document.createElement('thead');
-      the.appendChild(table.rows[0]);
-      table.insertBefore(the,table.firstChild);
-    }
-    // Safari doesn't support table.tHead, sigh
-    if (table.tHead === null) table.tHead = table.getElementsByTagName('thead')[0];
-
-    if (table.tHead.rows.length != 1) return; // can't cope with two header rows
-
-    // Sorttable v1 put rows with a class of "sortbottom" at the bottom (as
-    // "total" rows, for example). This is B&R, since what you're supposed
-    // to do is put them in a tfoot. So, if there are sortbottom rows,
-    // for backwards compatibility, move them to tfoot (creating it if needed).
-    sortbottomrows = [];
-    for (let i=0; i<table.rows.length; i++) {
-      if (table.rows[i].className.search(/\bsortbottom\b/) != -1) {
-        sortbottomrows[sortbottomrows.length] = table.rows[i];
-      }
-    }
-    if (sortbottomrows) {
-      if (table.tFoot === null) {
-        // table doesn't have a tfoot. Create one.
-        tfo = document.createElement('tfoot');
-        table.appendChild(tfo);
-      }
-      for (var i=0; i<sortbottomrows.length; i++) {
-        tfo.appendChild(sortbottomrows[i]);
-      }
-      sortbottomrows = undefined;
-    }
 
     // work through each column and calculate its type
-    headrow = table.tHead.rows[0].cells;
+    headrow = table.childNodes[0].childNodes[table.childNodes[0].childNodes.length - 1].cells;
     for (let i=0; i<headrow.length; i++) {
       // manually override the type with a sorttable_type attribute
       if (!headrow[i].className.match(/\bsorttable_nosort\b/)) { // skip this col
@@ -388,46 +355,6 @@ const sorttable = {
     } // while(swap)
   }
 }
-
-/* ******************************************************************
-   Supporting functions: bundled here to avoid depending on a library
-   ****************************************************************** */
-
-// Dean Edwards/Matthias Miller/John Resig
-
-/* for Mozilla/Opera9 */
-if (typeof document !== 'undefined' && document.addEventListener) {
-  document.addEventListener("DOMContentLoaded", sorttable.init, false);
-
-  /* for Internet Explorer */
-  /*@cc_on @*/
-  /*@if (@_win32)
-
-  document.write("<script id=__ie_onload defer src=javascript:void(0)><\/script>");
-  var script = document.getElementById("__ie_onload");
-  script.onreadystatechange = function() {
-      if (this.readyState === "complete") {
-          sorttable.init(); // call the onload handler
-      }
-  };
-  /*@end @*/
-}
-
-/* for Safari */
-if (
-  typeof navigator !== 'undefined'
-  && typeof document !== 'undefined'
-  && /WebKit/i.test(navigator.userAgent)
-) { // sniff
-    _timer = setInterval(function() {
-        if (/loaded|complete/.test(document.readyState)) {
-            sorttable.init(); // call the onload handler
-        }
-    }, 10);
-}
-
-/* for other browsers */
-if (typeof window !== 'undefined' && document !== 'undefined') window.onload = sorttable.init;
 
 // written by Dean Edwards, 2005
 // with input from Tino Zijdel, Matthias Miller, Diego Perini
