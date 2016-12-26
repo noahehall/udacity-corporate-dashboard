@@ -164,8 +164,7 @@ const filterTable = {
           let cell_data = getCellText(cell[j]);
           cell_value.push(cell_data);
 
-          if(SearchArgs[j]!="")
-          {
+          if(SearchArgs[j]!==""){
             occurence[j] = cell_data.split(SearchArgs[j]).length;
           }
         }//for j
@@ -175,7 +174,6 @@ const filterTable = {
             isRowValid = false;
           }
         }//for t
-
       }//if
 
       if(isRowValid===false) row[k].style.display = "none";

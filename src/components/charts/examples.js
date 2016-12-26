@@ -88,8 +88,9 @@ export class Examples extends React.Component {
           className='chart-container'
           style={{
             display: 'block',
+            fontSize: '8px',
             maxHeight: '400px',
-            overflow: 'hidden',
+            overflow: 'scroll',
             position: 'relative',
             verticalAlign: 'top',
             width: '100%',
@@ -104,10 +105,12 @@ export class Examples extends React.Component {
             containerHeight={this.state.containerHeight}
             containerWidth={this.state.containerWidth}
             datumLabels={[]}
+            filterable={true}
             id='table'
             margins={this.props.table.margins}
             preserveAspectRatio=''
             r=''
+            sortable={true}
             xAxis={false}
             xAxisLabel=''
             xScale={false}
