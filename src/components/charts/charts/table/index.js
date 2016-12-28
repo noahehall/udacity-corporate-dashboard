@@ -9,7 +9,7 @@ export const Table = ({ className, data, id, filterable, sortable }) => {
   if (sortable) thisClassName += ' sortable';
 
   return (
-    <table className={thisClassName} id={id}>
+    <table className={thisClassName} id={id} style={{fontSize: '14px'}}>
       <Thead
         data0={data[0]}
         filterable={filterable}
